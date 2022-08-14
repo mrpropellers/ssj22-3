@@ -6,6 +6,7 @@ https://unity3d.com/get-unity/download
 * Open Unity Hub
 * Go the [Unity Download Archive](https://unity3d.com/get-unity/download/archive) and install version *2021.3.8f1* via the Unity Hub link
 ## Download this Project
+You can download and install the project either via Github Desktop or by using the git CLI (command-line interface) -- most folks should opt to use Github Desktop unless you're already comfortable with - or want to learn how to use - the CLI
 ### Using Github Desktop
 * If you don't know git very well, the best way to clone this project is to use https://desktop.github.com/ -- the website will have instructions for setting up github and cloning this repository.
 * To open the project, you will need to have the [git CLI installed](https://git-scm.com/downloads)
