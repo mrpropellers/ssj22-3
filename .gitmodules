@@ -1,0 +1,3 @@
+[submodule "LeftOutToolkit"]
+	path = LeftOutToolkit
+	url = https://github.com/mrpropellers/LeftOutToolkit.git
