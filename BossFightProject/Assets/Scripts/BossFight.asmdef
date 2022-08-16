@@ -1,7 +1,9 @@
 {
     "name": "BossFight",
     "rootNamespace": "BossFight",
-    "references": [],
+    "references": [
+        "GUID:517d68e952e134045810d1ed7411423b"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
