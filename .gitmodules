@@ -1,3 +1,6 @@
 [submodule "LeftOutToolkit"]
 	path = LeftOutToolkit
 	url = https://github.com/mrpropellers/LeftOutToolkit.git
+[submodule "unity-atoms"]
+	path = unity-atoms
+	url = https://github.com/mrpropellers/unity-atoms.git
