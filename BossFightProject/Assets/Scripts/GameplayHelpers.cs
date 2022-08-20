@@ -43,6 +43,22 @@ namespace BossFight
         public static bool BelongsToPlayer(this Component self, out PlayerCharacterStateManager playerCharacterStateManager) =>
             BelongsToPlayer(self.gameObject, out playerCharacterStateManager);
 
+        static void AddChildTransforms(Transform currentChild, ICollection<Transform> allChildren)
+        {
+            allChildren.Add(currentChild);
+
+            if (currentChild.childCount == 0)
+            {
+                return;
+            }
+
+            for (var i = 0; i < currentChild.childCount; ++i)
+            {
+                var baby = currentChild.GetChild(i);
+                AddChildTransforms(baby, allChildren);
+            }
+        }
+
         public static void GetRigTargetFromChildren(this GameObject self, out Transform target, out List<Transform> children)
         {
             target = null;
@@ -55,7 +71,7 @@ namespace BossFight
                 {
                     target = child;
                 }
-                children.Add(child);
+                AddChildTransforms(child, children);
             }
         }
 

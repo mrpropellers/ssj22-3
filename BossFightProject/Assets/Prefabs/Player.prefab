@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 814034768131145378}
   - component: {fileID: 814034768131145376}
   - component: {fileID: 814034768131145379}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Jump Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4882,7 +4882,7 @@ GameObject:
   - component: {fileID: 814034768312519606}
   - component: {fileID: 814034768312519604}
   - component: {fileID: 814034768312519607}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Launch Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9752,7 +9752,7 @@ GameObject:
   - component: {fileID: 814034768581855138}
   - component: {fileID: 814034768581855136}
   - component: {fileID: 814034768581855139}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Land Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14622,7 +14622,7 @@ GameObject:
   - component: {fileID: 814034768740316669}
   - component: {fileID: 814034768740316667}
   - component: {fileID: 814034768740316666}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Move Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19432,7 +19432,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 814034768923729717}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19469,7 +19469,7 @@ GameObject:
   - component: {fileID: 6464877420670768758}
   - component: {fileID: 814034769425466246}
   - component: {fileID: 5061223469191830416}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19710,7 +19710,7 @@ GameObject:
   - component: {fileID: 814034769138407821}
   - component: {fileID: 8540693805784580355}
   - component: {fileID: 814034768720339133}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19946,7 +19946,7 @@ GameObject:
   - component: {fileID: 2385880082735090547}
   - component: {fileID: 1856553896}
   - component: {fileID: 1856553897}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -20102,6 +20102,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NoParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962084872960990241, guid: e94e0606e2b29234f9e9e83ae956225b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7046909291594535705, guid: e94e0606e2b29234f9e9e83ae956225b,
         type: 3}

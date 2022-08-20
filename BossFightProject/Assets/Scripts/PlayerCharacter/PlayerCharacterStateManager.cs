@@ -1,11 +1,13 @@
 using System;
+using LeftOut;
+using LeftOut.GameplayManagement;
 using LeftOut.GlobalConsts;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace BossFight
 {
-    public class PlayerCharacterStateManager : MonoBehaviour
+    public class PlayerCharacterStateManager : MonoBehaviour, ITrackableInstance
     {
         [SerializeField]
         IntConstant m_StartingHealth;
@@ -14,6 +16,7 @@ namespace BossFight
         IntVariableInstancer PlayerHealth { get; set; }
 
         public GameObjectEventReference DeathStartedEvent;
+        public event OnTrackedInstanceDestroyed OnDestroyed;
 
         void Awake()
         {
@@ -22,6 +25,11 @@ namespace BossFight
                 Debug.LogWarning($"{name} is not tagged as {Tags.Player} -- correcting now...");
                 gameObject.tag = Tags.Player;
             }
+        }
+
+        void Start()
+        {
+            InstanceTrackingList<PlayerCharacterStateManager>.Add(this);
         }
 
         public void ResetCharacterState(Transform teleportTo = null)
@@ -43,5 +51,11 @@ namespace BossFight
             // TODO: We may want to decide not to die based on the situation
             DeathStartedEvent.Event.Raise(gameObject);
         }
+
+        void OnDestroy()
+        {
+            OnDestroyed?.Invoke(this);
+        }
+
     }
 }
