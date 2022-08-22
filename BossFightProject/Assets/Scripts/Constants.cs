@@ -12,16 +12,17 @@ namespace BossFight.Constants
     public static class Layers
     {
         public static int Player = LayerMask.NameToLayer("Player");
+        public const string WallsName = "Ground";
+        public static int Walls = LayerMask.NameToLayer(WallsName);
+    }
+
+    public static class LayerMasks
+    {
+        public static int Walls = LayerMask.GetMask(Layers.WallsName);
     }
 
     [IncludeInSettings(true)]
     public static class AnimatorParameters
     {
-        public static int HurtboxActive = Animator.StringToHash("HurtboxActive");
-        public static int FacingDirection = Animator.StringToHash("FacingDirection");
-        public static int ClosestWallXOffset = Animator.StringToHash("ClosestWallXOffset");
-        public static int MeanPlayerYDistance = Animator.StringToHash("PlayerYDistance");
-        public static int MeanPlayerXDistance = Animator.StringToHash("PlayerXDistance");
-        public static int PlayersBehindRatio = Animator.StringToHash("PlayersBehindRatio");
     }
 }
