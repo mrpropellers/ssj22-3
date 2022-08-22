@@ -1882,8 +1882,6 @@ GameObject:
   - component: {fileID: 280938746757508224}
   - component: {fileID: 1523804902}
   - component: {fileID: 1931053408}
-  - component: {fileID: 1931053412}
-  - component: {fileID: 1931053413}
   - component: {fileID: 1931053415}
   m_Layer: 3
   m_Name: Slug
@@ -1941,42 +1939,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca152625addc49898af27fdebc786330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1931053412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4086397664882124695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"BossSensor","value":{"$content":0,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"BossFight.BossCharacter.BossSensors,
-      BossFight, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"BossAnimator","value":{"$content":1,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.Animator,
-      UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"Phase","value":{"$content":0,"$type":"System.Int32"},"typeHandle":{"Identification":"System.Int32,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
-    _objectReferences:
-    - {fileID: 1931053408}
-    - {fileID: 1523804902}
---- !u!114 &1931053413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4086397664882124695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efe58df89b5b74a97a123b5ed2b70422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
-    _objectReferences:
-    - {fileID: 11400000, guid: 8a237b75ccd4b254fa9f2873a49d4cc8, type: 2}
 --- !u!114 &1931053415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2036,7 +1998,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5588131191541896060}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49efc7680f5ab294ba79def2e6519e7b, type: 3}
   m_Name: 

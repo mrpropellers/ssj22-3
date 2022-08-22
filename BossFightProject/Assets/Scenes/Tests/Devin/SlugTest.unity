@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765181c9ef4b24d32a4f7cbd2ef370dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _variables: {fileID: 0}
 --- !u!114 &580488532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5085,33 +5086,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 909768131, guid: b8fb3f6202ff17a4094abd875bcf5f19, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1931053412, guid: b8fb3f6202ff17a4094abd875bcf5f19, type: 3}
-      propertyPath: _data._json
-      value: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"BossSensor","value":{"$content":0,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"BossFight.BossCharacter.BossSensors,
-        BossFight, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"BossAnimator","value":{"$content":1,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.Animator,
-        UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"Phase","value":{"$content":0,"$type":"System.Int32"},"typeHandle":{"Identification":"System.Int32,
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"},{"name":"HurtboxManager","value":{"$content":2,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"BossFight.HurtboxManager,
-        BossFight, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"Front
-        Offset","value":{"$content":2.0,"$type":"System.Single"},"typeHandle":{"Identification":"System.Single,
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"},{"name":"BossStats","value":{"$content":3,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"BossFight.BossCharacter.BossStats,
-        BossFight, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"AnimatorController","value":null,"typeHandle":{"Identification":null,"$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 1931053412, guid: b8fb3f6202ff17a4094abd875bcf5f19, type: 3}
-      propertyPath: _data._objectReferences.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1931053412, guid: b8fb3f6202ff17a4094abd875bcf5f19, type: 3}
-      propertyPath: _data._objectReferences.Array.data[2]
-      value: 
-      objectReference: {fileID: 4162415987273546338}
-    - target: {fileID: 1931053412, guid: b8fb3f6202ff17a4094abd875bcf5f19, type: 3}
-      propertyPath: _data._objectReferences.Array.data[3]
-      value: 
-      objectReference: {fileID: 4162415987273546339}
     - target: {fileID: 280938746757508224, guid: b8fb3f6202ff17a4094abd875bcf5f19,
         type: 3}
       propertyPath: m_RootOrder
@@ -5174,47 +5148,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8fb3f6202ff17a4094abd875bcf5f19, type: 3}
---- !u!1 &4162415987273546337 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4086397664882124695, guid: b8fb3f6202ff17a4094abd875bcf5f19,
-    type: 3}
-  m_PrefabInstance: {fileID: 4162415987273546336}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4162415987273546338 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1931053415, guid: b8fb3f6202ff17a4094abd875bcf5f19,
-    type: 3}
-  m_PrefabInstance: {fileID: 4162415987273546336}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4162415987273546337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99e72ced00b7c7f46869e8621f904eb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4162415987273546339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4162415987273546337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a5fa92a5dc0486086b74a476e1de89e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GroundAcceleration: 0
-  GroundDeceleration: 0
-  GroundMaxSpeed: 0
-  MinDistanceForCharge: 0
-  JumpTrajectoryCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  JumpAirTime: 0
 --- !u!1001 &8259079320720050913
 PrefabInstance:
   m_ObjectHideFlags: 0

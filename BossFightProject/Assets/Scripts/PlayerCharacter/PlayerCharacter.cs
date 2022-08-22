@@ -3,13 +3,11 @@ using System.Collections;
 using LeftOut;
 using LeftOut.GameplayManagement;
 using LeftOut.GlobalConsts;
-using Unity.VisualScripting;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace BossFight
 {
-    [IncludeInSettings(true)]
     [RequireComponent(typeof(Damageable))]
     public class PlayerCharacter : MonoBehaviour, ITrackableInstance
     {

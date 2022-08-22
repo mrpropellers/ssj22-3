@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using LeftOut;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BossFight.BossCharacter
@@ -10,10 +9,8 @@ namespace BossFight.BossCharacter
     /// Observes scene and translates observations into parameter settings inside the Boss's animator
     /// </summary>
     [RequireComponent(typeof(Animator))]
-    [IncludeInSettings(true)]
     public class BossSensors : MonoBehaviour
     {
-        [IncludeInSettings(true)]
         public struct PlayerObservation
         {
             public int FrameMeasured { get; }
@@ -28,7 +25,6 @@ namespace BossFight.BossCharacter
             }
         }
 
-        [IncludeInSettings(true)]
         public struct ArenaObservation
         {
             public int FrameMeasured { get; }

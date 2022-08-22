@@ -1,12 +1,10 @@
 ﻿using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BossFight.BossCharacter
 {
-    //[CreateAssetMenu(fileName = "BossStats", menuName = "BossFight/BossStats", order = 0)]
-    [IncludeInSettings(true)]
-    public class BossStats : MonoBehaviour
+    [CreateAssetMenu(fileName = "BossStats", menuName = "BossFight/BossStats", order = 0)]
+    public class BossStats : ScriptableObject
     {
         [Min(5f)]
         public float GroundAcceleration;

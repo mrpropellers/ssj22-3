@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BossFight.Constants
 {
@@ -21,7 +20,6 @@ namespace BossFight.Constants
         public static int Walls = LayerMask.GetMask(Layers.WallsName);
     }
 
-    [IncludeInSettings(true)]
     public static class AnimatorParameters
     {
     }

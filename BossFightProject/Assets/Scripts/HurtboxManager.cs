@@ -1,11 +1,9 @@
 using System;
 using LeftOut;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BossFight
 {
-    [IncludeInSettings(true)]
     public class HurtboxManager : MonoBehaviour
     {
         Hurtbox[] m_Hurtboxes;
