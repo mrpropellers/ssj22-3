@@ -11,10 +11,10 @@ TagManager:
   - Boss
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - Ground
+  - Ceiling
+  - Platform
   - 
   - 
   - 
