@@ -19948,6 +19948,7 @@ GameObject:
   - component: {fileID: 1856553897}
   - component: {fileID: 7586688550750159880}
   - component: {fileID: 1813931331}
+  - component: {fileID: 1032705648}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -20039,6 +20040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: d205d2282fb1a5e41917ca6a00cb8846, type: 2}
   m_CanProcessInput: {fileID: 1813931331}
+  m_IsGrounded: {fileID: 0}
 --- !u!114 &2385880082735090547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20084,6 +20086,7 @@ MonoBehaviour:
     type: 2}
   PlayerHasControl: {fileID: 1813931331}
   PlayerHealth: {fileID: 1856553896}
+  PlayerIsGrounded: {fileID: 1032705648}
   DeathStartedEvent:
     _usage: 0
     _event: {fileID: 11400000, guid: 23c91bf8126a5b94d977d6e480b57b27, type: 2}
@@ -20122,6 +20125,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inMemoryCopy: {fileID: 0}
   _base: {fileID: 11400000, guid: 4e1e9ea2619ec2a4f9a98db836818830, type: 2}
+--- !u!114 &1032705648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5911309695814264503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b8675a4f46440369248598e656cfbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inMemoryCopy: {fileID: 0}
+  _base: {fileID: 11400000, guid: 0c5782f7530594545a505dc15957335b, type: 2}
 --- !u!1001 &1177510442895766020
 PrefabInstance:
   m_ObjectHideFlags: 0

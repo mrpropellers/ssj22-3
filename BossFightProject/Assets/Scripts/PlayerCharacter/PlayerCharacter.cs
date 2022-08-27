@@ -12,7 +12,6 @@ namespace BossFight
     public class PlayerCharacter : MonoBehaviour, ITrackableInstance
     {
         #region Player Stats
-
         [SerializeField]
         IntConstant StartingHealth;
         [SerializeField]
@@ -31,6 +30,8 @@ namespace BossFight
         BoolVariableInstancer PlayerHasControl;
         [SerializeField]
         IntVariableInstancer PlayerHealth;
+        [SerializeField]
+        BoolVariableInstancer PlayerIsGrounded;
         #endregion
 
 
@@ -46,6 +47,7 @@ namespace BossFight
         #region Properties
 
         public bool IsInvulnerable => m_InvulnerabilityTimeRemaining > 0f;
+        public bool IsOnGround => PlayerIsGrounded.Value;
         #endregion
         public event OnTrackedInstanceDestroyed OnDestroyed;
 

@@ -1,0 +1,16 @@
+{
+    "name": "BossFight.Shared",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bb11691ec533ebc449d8c527e75f5b9a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

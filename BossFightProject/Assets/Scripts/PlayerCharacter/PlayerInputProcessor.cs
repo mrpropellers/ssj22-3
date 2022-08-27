@@ -10,6 +10,9 @@ namespace BossFight
         [SerializeField]
         BoolVariableInstancer m_CanProcessInput;
 
+        [SerializeField]
+        BoolVariableInstancer m_IsGrounded;
+
         public bool CanProcessInput => m_CanProcessInput.Value;
 
         protected override void Awake()
@@ -26,6 +29,7 @@ namespace BossFight
 
         protected override void FixedUpdate()
         {
+            m_IsGrounded.Value = _grounded;
             if (m_CanProcessInput.Value)
             {
                 base.FixedUpdate();

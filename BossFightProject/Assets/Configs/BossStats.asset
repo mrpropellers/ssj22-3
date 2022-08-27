@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a5fa92a5dc0486086b74a476e1de89e, type: 3}
+  m_Name: BossStats
+  m_EditorClassIdentifier: 
+  GroundAcceleration: 10
+  GroundDeceleration: 20
+  GroundMaxSpeed: 5
+  DecisionCooldown: 3
+  MinDistanceForCharge: 3
+  JumpTrajectoryCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.20249051
+      value: 0.99676955
+      inSlope: -0.018404987
+      outSlope: -0.018404987
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.21218401
+      outWeight: 0.05145701
+    - serializedVersion: 3
+      time: 0.8755762
+      value: 0.59031355
+      inSlope: -2.3449357
+      outSlope: -2.3449357
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.059694838
+    - serializedVersion: 3
+      time: 0.99888825
+      value: -0.19977678
+      inSlope: -10.7978325
+      outSlope: -10.7978325
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.013722342
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  JumpAirTime: 5
+  Attacks:
+  - {fileID: 11400000, guid: 88913138ddc41704c966afe88431477d, type: 2}

@@ -5,45 +5,13 @@ using UnityEngine;
 
 namespace BossFight.BossCharacter
 {
-    /// <summary>
-    /// Observes scene and translates observations into parameter settings inside the Boss's animator
-    /// </summary>
-    [RequireComponent(typeof(Animator))]
     public class BossSensors : MonoBehaviour
     {
-        public struct PlayerObservation
-        {
-            public int FrameMeasured { get; }
-            public Vector2 MeanPlayerVector { get; }
-            public int NumInsideBounds { get; }
-
-            internal PlayerObservation(int frame, Vector2 playerVector, int numInsideBounds)
-            {
-                FrameMeasured = frame;
-                MeanPlayerVector = playerVector;
-                NumInsideBounds = numInsideBounds;
-            }
-        }
-
-        public struct ArenaObservation
-        {
-            public int FrameMeasured { get; }
-            public float DistanceFromFrontWall { get; }
-            public float DistanceFromBehindWall { get; }
-
-            internal ArenaObservation(int frame, float frontDistance, float backDistance)
-            {
-                FrameMeasured = frame;
-                DistanceFromFrontWall = frontDistance;
-                DistanceFromBehindWall = backDistance;
-            }
-        }
 
         const float k_MaxRaycastDistance = 1000f;
 
         Collider2D[] m_Colliders;
         List<PlayerCharacter> m_Players;
-        Animator m_Animator;
         Bounds m_CurrentBounds;
         PlayerObservation m_LastKnownPlayerState;
         ArenaObservation m_LastKnownArenaState;
@@ -86,14 +54,12 @@ namespace BossFight.BossCharacter
             }
         }
 
-        void Start()
+        void Awake()
         {
             m_Players = InstanceTrackingList<PlayerCharacter>.GetReference();
-            m_Animator = GetComponent<Animator>();
             m_Colliders = GetComponentsInChildren<Collider2D>();
-            m_LastKnownPlayerState = new PlayerObservation(int.MinValue, Vector2.positiveInfinity, 0);
-            m_LastKnownArenaState = new ArenaObservation(
-                int.MinValue, float.PositiveInfinity, float.PositiveInfinity);
+            m_LastKnownPlayerState = new PlayerObservation(int.MinValue);
+            m_LastKnownArenaState = new ArenaObservation(int.MinValue);
         }
 
         void Update()
@@ -105,11 +71,37 @@ namespace BossFight.BossCharacter
             }
         }
 
+        void OnDrawGizmosSelected()
+        {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+            var tf = transform;
+            var pos = tf.position;
+            var playerObservation = CurrentPlayerObservation;
+            Gizmos.color = Color.red;
+            foreach (var location in playerObservation.PlayerLocations)
+            {
+                var center = tf.TransformPoint(location);
+                Gizmos.DrawWireSphere(new Vector3(center.x, center.y, pos.z), 1f);
+            }
+
+            var arenaObservation = CurrentArenaObservation;
+
+            Gizmos.color = Color.white;
+            Gizmos.DrawLine(pos, pos + (Vector3)(Forward2D * arenaObservation.DistanceFromFrontWall));
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(pos, pos - (Vector3)(Forward2D * arenaObservation.DistanceFromBehindWall));
+            Gizmos.color = Color.gray;
+            Gizmos.DrawLine(pos, pos + (Vector3)(Vector2.down * arenaObservation.DistanceFromGround));
+        }
+
         ArenaObservation GenerateArenaObservation()
         {
             Debug.Assert(Time.frameCount != m_LastKnownArenaState.FrameMeasured,
             "Should only generate at most one observation per frame.");
-            var origin = (Vector2)m_CurrentBounds.center;
+            var origin = (Vector2)transform.position;
             var forward = Forward2D;
             var hitFront = Physics2D.Raycast(origin, forward, k_MaxRaycastDistance, Constants.LayerMasks.Walls);
             float distanceFront;
@@ -127,7 +119,7 @@ namespace BossFight.BossCharacter
             float distanceBack;
             if (hitBack.collider == null)
             {
-                Debug.LogWarning("Missing a forward raycast - must assume we're on top of a wall.");
+                Debug.LogWarning("Missing a backwards raycast - must assume we're on top of a wall.");
                 distanceBack = 0f;
             }
             else
@@ -135,7 +127,21 @@ namespace BossFight.BossCharacter
                 distanceBack = hitBack.distance;
             }
 
-            return new ArenaObservation(Time.frameCount, distanceFront, distanceBack);
+            var hitGround = Physics2D.Raycast(
+                origin, Vector2.down, k_MaxRaycastDistance, Constants.LayerMasks.Ground);
+            float distanceGround;
+            if (hitGround.collider == null)
+            {
+                Debug.LogWarning("Missing a ground raycast - did we fall off the edge?");
+                distanceGround = 0f;
+            }
+            else
+            {
+                distanceGround = hitGround.distance;
+            }
+
+
+            return new ArenaObservation(Time.frameCount, distanceFront, distanceBack, distanceGround);
         }
 
         PlayerObservation GeneratePlayerObservation()
@@ -143,26 +149,21 @@ namespace BossFight.BossCharacter
             Debug.Assert(Time.frameCount != m_LastKnownPlayerState.FrameMeasured,
             "Should only generate at most one observation per frame.");
             // Create some floats for computing means later
-            var numPlayers = (float)m_Players.Count;
-            var meanPosition = Vector2.zero;
+            var locations = new Vector2[m_Players.Count];
             var numInBounds = 0;
 
-            foreach (var player in m_Players)
+            for (var i = 0; i < m_Players.Count; ++i)
             {
+                var player = m_Players[i];
                 var playerPosition = player.transform.position;
                 if (m_CurrentBounds.Contains(playerPosition))
                 {
                     numInBounds++;
                 }
-                var playerLocal = transform.InverseTransformPoint(playerPosition);
-
-                // Players in front and behind shouldn't cancel each other out, so we take the absolute value along x
-                // but, players below shouldn't cause the boss to jump, so no abs on y
-                meanPosition +=  new Vector2(Mathf.Abs(playerLocal.x), playerLocal.y);
+                locations[i] = transform.InverseTransformPoint(playerPosition);
             }
 
-            meanPosition /= numPlayers;
-            return new PlayerObservation(Time.frameCount, meanPosition, numInBounds);
+            return new PlayerObservation(Time.frameCount, locations, numInBounds);
         }
     }
 }

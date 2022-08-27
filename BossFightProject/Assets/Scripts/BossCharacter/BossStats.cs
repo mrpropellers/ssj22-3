@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BossFight.BossCharacter
@@ -14,11 +15,17 @@ namespace BossFight.BossCharacter
         public float GroundMaxSpeed;
 
         [Min(0f)]
+        public float DecisionCooldown = 2f;
+
+        [Min(0f)]
         public float MinDistanceForCharge;
 
         public AnimationCurve JumpTrajectoryCurve;
         [Min(1f)]
         public float JumpAirTime;
+
+        [SerializeField]
+        internal List<BossAttack> Attacks;
 
         public float TimeToMaxSpeed => GroundMaxSpeed / GroundAcceleration;
         public float DistanceToMaxSpeed => 0.5f * GroundMaxSpeed * GroundMaxSpeed / GroundAcceleration;
