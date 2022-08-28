@@ -289,6 +289,20 @@
       "source": "local",
       "dependencies": {}
     },
+    "leftout.urp-cel-shading": {
+      "version": "https://github.com/mrpropellers/Unity-URP-CelShadeLit.git?path=/CelShadeLit#as-package",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "0afc1b3d65b7d2ac6a335b95cea28365d2215237"
+    },
+    "leftout.urp-outlines": {
+      "version": "https://github.com/mrpropellers/Unity-URP-Outlines.git?path=/Outlines#as-package",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "662be9c0ae66b0a0869c8647ca9ece23de1de7a7"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

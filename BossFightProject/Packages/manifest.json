@@ -10,6 +10,8 @@
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.ugui": "1.0.0",
     "leftout.toolkit": "file:../../LeftOutToolkit/LeftOutUnityTools",
+    "leftout.urp-outlines": "https://github.com/mrpropellers/Unity-URP-Outlines.git?path=/Outlines#as-package",
+    "leftout.urp-cel-shading": "https://github.com/mrpropellers/Unity-URP-CelShadeLit.git?path=/CelShadeLit#as-package",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
