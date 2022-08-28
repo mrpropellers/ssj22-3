@@ -598,7 +598,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    Standalone: ENABLE_INPUT_SYSTEM
+    Standalone: ENABLE_INPUT_SYSTEM;UNITY_ATOMS
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

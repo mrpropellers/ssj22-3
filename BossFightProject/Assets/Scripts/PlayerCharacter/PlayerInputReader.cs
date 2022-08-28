@@ -6,5 +6,7 @@ using UnityEngine;
 namespace BossFight
 {
     public class PlayerInputReader : PlayerInput
-    { }
+    {
+
+    }
 }
