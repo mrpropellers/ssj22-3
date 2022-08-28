@@ -21,10 +21,15 @@ namespace BossFight
             m_CanProcessInput.Variable.Changed.RegisterListener(this);
         }
 
-        public void OnEventRaised(bool item)
+        public void OnEventRaised(bool playerHasControl)
         {
             // Player input handler gets fully disabled when the player doesn't have control of the character
-            _input.enabled = item;
+            if (!playerHasControl)
+            {
+                Debug.Log("Disabling player control");
+            }
+
+            _input.enabled = playerHasControl;
         }
 
         protected override void FixedUpdate()

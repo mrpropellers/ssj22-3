@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using LeftOut;
 using UnityEngine;
 
@@ -21,6 +22,11 @@ namespace BossFight
             SetAll(true);
         }
 
+        public void ActivateAfter(float seconds)
+        {
+            StartCoroutine(WaitForActivate(seconds));
+        }
+
         public void DeactivateAll()
         {
             SetAll(false);
@@ -39,6 +45,12 @@ namespace BossFight
                     hurtbox.Deactivate();
                 }
             }
+        }
+
+        IEnumerator WaitForActivate(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            ActivateAll();
         }
     }
 }

@@ -9,13 +9,13 @@ namespace BossFight.BossCharacter
         public int FrameMeasured { get; }
         public int NumInsideBounds { get; }
         // Location in local space coordinates of the players
-        public Vector2[] PlayerLocations { get; }
+        public Vector2[] PlayerPositionsLocal { get; }
 
-        internal PlayerObservation(int frame, Vector2[] locations, int numInsideBounds)
+        internal PlayerObservation(int frame, Vector2[] positionsLocal, int numInsideBounds)
         {
             FrameMeasured = frame;
             NumInsideBounds = numInsideBounds;
-            PlayerLocations = locations;
+            PlayerPositionsLocal = positionsLocal;
         }
 
         // Need an "empty constructor" for initializing null measurements on game start
@@ -23,7 +23,7 @@ namespace BossFight.BossCharacter
         {
             FrameMeasured = frame;
             NumInsideBounds = int.MinValue;
-            PlayerLocations = Array.Empty<Vector2>();
+            PlayerPositionsLocal = Array.Empty<Vector2>();
         }
     }
 

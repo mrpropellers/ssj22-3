@@ -1,28 +1,32 @@
 ﻿using System;
+using BossFight.Constants;
 using LeftOut.Extensions;
 using UnityEngine;
 
 namespace BossFight.BossCharacter
 {
     [RequireComponent(typeof(BossSensors))]
-    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(UnityEngine.Animator))]
     public class BossBrain : MonoBehaviour
     {
         BossSensors m_Sensors;
-        Animator m_Animator;
+        UnityEngine.Animator m_Animator;
         HurtboxManager m_Hurtboxes;
-
-        BossAttack m_CurrentAttack;
+        BossMove m_CurrentMove;
 
         float m_RemainingDecisionCooldown;
 
         [SerializeField]
         BossStats m_BossStats;
 
+        // Explicitly check for null with == here so we can use null-coalescing ?.Function() calls later
+        // NOTE: We'll still get a warning from Rider, but the warning is wrong.
+        public HurtboxManager Hurtboxes => m_Hurtboxes == null ? null : m_Hurtboxes;
+
         void Start()
         {
             m_Sensors = GetComponent<BossSensors>();
-            m_Animator = GetComponent<Animator>();
+            m_Animator = GetComponent<UnityEngine.Animator>();
             m_Hurtboxes = GetComponent<HurtboxManager>();
             if (m_Hurtboxes == null)
             {
@@ -34,14 +38,12 @@ namespace BossFight.BossCharacter
 
         void Update()
         {
-            if (m_CurrentAttack != null)
+            if (m_CurrentMove != null)
             {
-                m_CurrentAttack.DoUpdate(gameObject);
-                if (m_CurrentAttack.IsFinished)
+                m_CurrentMove.DoUpdate();
+                if (m_CurrentMove.IsFinished)
                 {
-                    Debug.Log($"Attack finished: {m_CurrentAttack}");
-                    m_CurrentAttack = null;
-                    m_RemainingDecisionCooldown = m_BossStats.DecisionCooldown;
+                    CleanUpFinishedMove();
                 }
                 else
                 {
@@ -56,24 +58,38 @@ namespace BossFight.BossCharacter
             }
 
             Debug.Log("Attempting to pick attack...");
-            PickNewAttack();
+            PickNewMove();
         }
 
-        void PickNewAttack()
+        void OnDrawGizmos()
+        {
+            Gizmos.color = m_CurrentMove == null ? Color.white : Color.red;
+            m_Sensors ??= GetComponent<BossSensors>();
+            var bounds = m_Sensors.CurrentBounds;
+            Gizmos.DrawWireCube(bounds.center, bounds.size);
+        }
+
+        void CleanUpFinishedMove()
+        {
+            Debug.Log($"Attack finished: {m_CurrentMove}");
+            m_Animator.SetTrigger(AnimatorParameters.TriggerMoveFinished);
+            m_CurrentMove = null;
+            m_RemainingDecisionCooldown = m_BossStats.DecisionCooldown;
+            Hurtboxes?.DeactivateAll();
+        }
+
+        void PickNewMove()
         {
             var attacksShuffled = m_BossStats.Attacks.GetShuffledCopy();
-            var arenaObservation = m_Sensors.CurrentArenaObservation;
-            var playerObservations = m_Sensors.CurrentPlayerObservation;
             foreach (var attack in attacksShuffled)
             {
-                if (attack.CanStart(gameObject, arenaObservation, playerObservations))
+                if (attack.CanStart(m_Sensors))
                 {
                     Debug.Log($"Starting attack: {attack}");
                     m_Animator.SetTrigger(attack.AnimatorTrigger);
-                    m_Hurtboxes?.ActivateAll();
 
-                    attack.Begin(gameObject, arenaObservation, playerObservations);
-                    m_CurrentAttack = attack;
+                    attack.Begin(m_Sensors, m_BossStats, Hurtboxes);
+                    m_CurrentMove = attack;
                     return;
                 }
             }

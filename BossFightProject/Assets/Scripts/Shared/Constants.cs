@@ -22,8 +22,10 @@ namespace BossFight.Constants
         public static int Ground = LayerMask.GetMask(Layers.GroundName);
     }
 
-    public static class AnimatorTriggers
+    public static class AnimatorParameters
     {
-        public const string ChargeAttack = "Attack_BasicCharge";
+        public const string TriggerMoveFinished = "FinishMove";
+        public const string TriggerChargeAttack = "Attack_BasicCharge";
+        public const string TriggerTurnAround = "TurnAround";
     }
 }

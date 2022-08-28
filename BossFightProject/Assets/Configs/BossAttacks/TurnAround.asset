@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cbb434c43194b4c801ef3d105a243b2, type: 3}
+  m_Name: TurnAround
+  m_EditorClassIdentifier: 
+  m_AnimatorFinishedEvent: {fileID: 11400000, guid: d2194ac3f5b51a14a89f58442f1c50ca,
+    type: 2}
+  m_WallDistanceThreshold: 0.46
+  m_ReverseTime: 0.57
