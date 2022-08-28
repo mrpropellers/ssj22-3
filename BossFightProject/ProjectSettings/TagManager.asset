@@ -14,10 +14,10 @@ TagManager:
   - Boss
   - Water
   - UI
-  - Player
+  - Wall
   - Ground
-  - 
-  - 
+  - Ceiling
+  - Platform
   - 
   - 
   - 
