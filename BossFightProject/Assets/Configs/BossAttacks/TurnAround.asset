@@ -15,4 +15,4 @@ MonoBehaviour:
   m_AnimatorFinishedEvent: {fileID: 11400000, guid: d2194ac3f5b51a14a89f58442f1c50ca,
     type: 2}
   m_WallDistanceThreshold: 0.46
-  m_ReverseTime: 0.57
+  m_ReverseTime: 1

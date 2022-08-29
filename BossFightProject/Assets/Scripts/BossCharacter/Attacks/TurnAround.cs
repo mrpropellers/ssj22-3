@@ -10,7 +10,8 @@ namespace BossFight.BossCharacter
     class TurnAround : BossMove, IAtomListener<GameObject>
     {
         bool m_IsWaitingForAnimator;
-        float m_TimeReverseStarted;
+        bool m_IsFinished;
+        float m_TimeReverseStarted = float.NegativeInfinity;
         Animator m_Animator;
 
         [SerializeField]
@@ -24,8 +25,10 @@ namespace BossFight.BossCharacter
         [Range(0.1f, 2f)]
         float m_ReverseTime = 1f;
 
+        bool IsBackingUp => Time.time - m_TimeReverseStarted < m_ReverseTime;
+
         public override string AnimatorTrigger => AnimatorParameters.TriggerTurnAround;
-        public override bool IsFinished => m_IsWaitingForAnimator == false;
+        public override bool IsFinished => m_IsFinished;
         public override bool CanStart(BossSensors sensors) =>
             sensors.CurrentArenaObservation.DistanceFromFrontWall < m_WallDistanceThreshold;
 
@@ -33,6 +36,7 @@ namespace BossFight.BossCharacter
         public override void Begin(BossSensors sensors, BossStats stats, HurtboxManager _)
         {
             m_IsWaitingForAnimator = false;
+            m_IsFinished = false;
             var arenaObservation = sensors.CurrentArenaObservation;
             var backUpDistance = Mathf.Abs(Mathf.Clamp(
                 sensors.DistanceFromBackBounds(
@@ -40,8 +44,9 @@ namespace BossFight.BossCharacter
             Debug.Log($"Backing up {backUpDistance}");
 
             var targetX = sensors.transform.position.x - (sensors.Forward2D.x * backUpDistance);
-            sensors.transform.DOMoveX(targetX, m_ReverseTime).SetEase(Ease.Linear);
+            //sensors.transform.DOMoveX(targetX, m_ReverseTime).SetEase(Ease.Linear);
             m_TimeReverseStarted = Time.time;
+            Debug.Log($"Starting to backup at {m_TimeReverseStarted}");
             // We'll need to access the Animator for this maneuver, so store a reference now
             m_Animator = sensors.GetComponent<Animator>();
         }
@@ -49,25 +54,28 @@ namespace BossFight.BossCharacter
         public override void DoUpdate()
         {
             base.DoUpdate();
-            if (m_IsWaitingForAnimator)
+            if (m_IsWaitingForAnimator || m_IsFinished)
             {
                 return;
             }
 
-            if (Time.time - m_TimeReverseStarted > m_ReverseTime)
+            if (!IsBackingUp)
             {
-                // This should trigger the TurnAround state which is handled in the Animator's state machine
-                m_Animator.SetTrigger(AnimatorParameters.TriggerMoveFinished);
+                Debug.Log($"No longer backing up at {Time.time}");
                 m_IsWaitingForAnimator = true;
                 m_AnimatorFinishedEvent.RegisterListener(this);
+                // This should trigger the TurnAround state which is handled in the Animator's state machine
+                m_Animator.SetTrigger(AnimatorParameters.TriggerMoveFinished);
             }
         }
 
         public void OnEventRaised(GameObject item)
         {
+            Debug.Log("Turn around finished");
             Debug.Assert(m_IsWaitingForAnimator);
             m_AnimatorFinishedEvent.UnregisterListener(this);
             m_IsWaitingForAnimator = false;
+            m_IsFinished = true;
         }
     }
 }

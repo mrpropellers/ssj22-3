@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SlugModelController
+  m_Controller: {fileID: 9100000, guid: 6b311a1543f93f746941347f2edd5771, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: f2bac7dd328bd384b9b8b5a3136076a6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6c52e3b3ba0d29d4cb16c6481ba5dff6, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: dca689fe8ef174344a9ca92cc0ff831e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1ad24ffd06cab6641a0a5dd03bdcd366, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f81af1eaa0f47604fbb20289e350cc7f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 57429fd16dc0034468c8f437d7d18957, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7d5769250d0100344886f9486b9cbfbe, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7d5769250d0100344886f9486b9cbfbe, type: 2}

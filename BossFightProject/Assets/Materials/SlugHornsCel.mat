@@ -7,21 +7,17 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CelShadeExample
-  m_Shader: {fileID: -6465566751694194690, guid: 0f2dd2b67bfae684aac23b25664f5f7c,
-    type: 3}
+  m_Name: SlugHornsCel
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ValidKeywords:
-  - _ADDITIONAL_LIGHTS
-  - _ADDITIONAL_LIGHT_SHADOWS
-  - _MAIN_LIGHT_SHADOWS
-  - _MAIN_LIGHT_SHADOWS_CASCADE
-  - _SHADOWS_SOFT
+  - _EMISSION
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -93,6 +89,7 @@ Material:
     - _AlphaClip: 0
     - _AmbientEnvironmentMultiplier: 1
     - _Blend: 0
+    - _BlendOp: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -101,12 +98,12 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EdgeDiffuse: 0.001
-    - _EdgeDistanceAttenuation: 0.001
-    - _EdgeRim: 0.001
+    - _EdgeDiffuse: 0
+    - _EdgeDistanceAttenuation: 0
+    - _EdgeRim: 0
     - _EdgeRimOffset: 0.001
-    - _EdgeShadowAttenuation: 0.001
-    - _EdgeSpecular: 0.001
+    - _EdgeShadowAttenuation: 0.02
+    - _EdgeSpecular: 0.01
     - _EdgeSpecularOffset: 0.01
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
@@ -120,12 +117,13 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RimAmount: 0.25
+    - _RimAmount: 0.122
     - _RimConstant: 0
-    - _RimStrength: 1
-    - _RimThreshold: 0.15
+    - _RimStrength: 0.837
+    - _RimThreshold: 0.772
     - _SHADOWS_SOFT: 1
-    - _Smoothness: 1
+    - _SampleGI: 0
+    - _Smoothness: 0.952
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -134,10 +132,10 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Albedo: {r: 0, g: 0, b: 0, a: 0}
-    - _AmbientColor: {r: 0, g: 0, b: 0, a: 1}
-    - _BaseColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
+    - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0.42280522, g: 0.38808292, b: 0.5377358, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &4068162859695982652

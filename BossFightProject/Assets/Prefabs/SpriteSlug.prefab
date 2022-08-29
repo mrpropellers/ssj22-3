@@ -1316,6 +1316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426179db5d084a6897a1636e6bed0183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animators: []
   <Owner>k__BackingField: {fileID: 4086397664882124695}
   DamageAmount: 1
 --- !u!1 &2566887052518296492
@@ -1485,6 +1486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426179db5d084a6897a1636e6bed0183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animators: []
   <Owner>k__BackingField: {fileID: 4086397664882124695}
   DamageAmount: 1
 --- !u!1 &2791923746530590994
@@ -1671,6 +1673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426179db5d084a6897a1636e6bed0183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animators: []
   <Owner>k__BackingField: {fileID: 4086397664882124695}
   DamageAmount: 1
 --- !u!1 &3050287115392644474
@@ -1869,6 +1872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426179db5d084a6897a1636e6bed0183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animators: []
   <Owner>k__BackingField: {fileID: 4086397664882124695}
   DamageAmount: 1
 --- !u!1 &4086397664882124695
@@ -1884,7 +1888,7 @@ GameObject:
   - component: {fileID: 1931053408}
   - component: {fileID: 1931053415}
   m_Layer: 3
-  m_Name: Slug
+  m_Name: SpriteSlug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2233,5 +2237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426179db5d084a6897a1636e6bed0183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animators: []
   <Owner>k__BackingField: {fileID: 4086397664882124695}
   DamageAmount: 1

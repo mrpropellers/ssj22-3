@@ -78,13 +78,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   outlineSettings:
-    outlineColor: {r: 0, g: 0, b: 0, a: 0.7647059}
-    outlineScale: 2.4
-    depthThreshold: 12
-    robertsCrossMultiplier: 272
-    normalThreshold: 0.556
-    steepAngleThreshold: 0.24
-    steepAngleMultiplier: 74
+    outlineColor: {r: 0, g: 0, b: 0, a: 0.9411765}
+    outlineScale: 2
+    depthThreshold: 47.2
+    robertsCrossMultiplier: 190
+    normalThreshold: 1
+    steepAngleThreshold: 0.34
+    steepAngleMultiplier: 125
   viewSpaceNormalsTextureSettings:
     colorFormat: 0
     depthBufferBits: 16
