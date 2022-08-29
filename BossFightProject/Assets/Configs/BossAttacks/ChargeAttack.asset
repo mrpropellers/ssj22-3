@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb70b64a8a394c7cb0712169718fe25b, type: 3}
   m_Name: ChargeAttack
   m_EditorClassIdentifier: 
+  m_Speed: 10
+  m_WindupTime: 1.2
   m_FrontClearanceNeeded: 5
   m_PlayerMinimumDistance: 3
