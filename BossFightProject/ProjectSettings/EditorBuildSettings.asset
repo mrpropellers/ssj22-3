@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Tests/Miranda/slug.unity
+    guid: f957fa4d3111dfc4b904c02faee58260
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 6ad0adba5ddc9ab4d8ad5305b8d3160e,
       type: 2}
