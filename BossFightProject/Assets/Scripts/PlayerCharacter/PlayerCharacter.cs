@@ -61,11 +61,12 @@ namespace BossFight
             }
 
             GetComponent<Damageable>().OnDamageReceived += HandleIncomingDamage;
+            Debug.Log("Registering self to InstanceTracker");
+            InstanceTrackingList<PlayerCharacter>.Add(this);
         }
 
         void Start()
         {
-            InstanceTrackingList<PlayerCharacter>.Add(this);
             ResetStats();
         }
 

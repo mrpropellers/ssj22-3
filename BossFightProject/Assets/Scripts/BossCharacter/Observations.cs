@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BossFight.BossCharacter
@@ -7,21 +6,25 @@ namespace BossFight.BossCharacter
     public struct PlayerObservation
     {
         public int FrameMeasured { get; }
+        public GameObject[] PlayersObserved { get; }
         public int NumInsideBounds { get; }
         // Location in local space coordinates of the players
         public Vector2[] PlayerPositionsLocal { get; }
 
-        internal PlayerObservation(int frame, Vector2[] positionsLocal, int numInsideBounds)
+        internal PlayerObservation(int frame, GameObject[] playersObserved, Vector2[] positionsLocal, int numInsideBounds)
         {
             FrameMeasured = frame;
+            PlayersObserved = playersObserved;
             NumInsideBounds = numInsideBounds;
             PlayerPositionsLocal = positionsLocal;
+
         }
 
         // Need an "empty constructor" for initializing null measurements on game start
         internal PlayerObservation(int frame)
         {
             FrameMeasured = frame;
+            PlayersObserved = Array.Empty<GameObject>();
             NumInsideBounds = int.MinValue;
             PlayerPositionsLocal = Array.Empty<Vector2>();
         }

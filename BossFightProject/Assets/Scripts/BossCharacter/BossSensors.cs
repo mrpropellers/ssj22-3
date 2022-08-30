@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LeftOut;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace BossFight.BossCharacter
@@ -15,11 +17,21 @@ namespace BossFight.BossCharacter
 
         const float k_MaxRaycastDistance = 1000f;
 
+        #region Member Variables
         BoundsRecord m_BoundsRecord = new BoundsRecord() {Frame = int.MinValue};
         Collider2D[] m_Colliders;
         List<PlayerCharacter> m_Players;
         PlayerObservation m_LastKnownPlayerState;
         ArenaObservation m_LastKnownArenaState;
+
+        [field: SerializeField]
+        public GameObjectVariableInstancer FrontAttackTarget { get; private set; }
+        [field: SerializeField]
+        public GameObjectVariableInstancer RearAttackTarget { get; private set; }
+
+        #endregion
+
+        #region Properties
 
         internal Bounds CurrentBounds
         {
@@ -85,6 +97,9 @@ namespace BossFight.BossCharacter
         }
 
         internal Vector2 PositionToBoundsCenter => CurrentBounds.center - transform.position;
+        #endregion
+
+        #region Unity Events
 
         void Awake()
         {
@@ -120,6 +135,9 @@ namespace BossFight.BossCharacter
             Gizmos.DrawLine(pos, pos + (Vector3)(Vector2.down * arenaObservation.DistanceFromGround));
         }
 
+        #endregion
+
+        #region Public Methods
         /// <summary>
         /// Converts a distance measured at transform.position to a distance from the front edge of this object's
         /// bounding box
@@ -137,6 +155,10 @@ namespace BossFight.BossCharacter
         public float FrontBoundsToPosition(float distanceFromBounds)
             => distanceFromBounds + Forward2D.x * PositionToBoundsCenter.x + CurrentBounds.extents.x;
 
+        #endregion
+
+        #region Private Methods
+
         ArenaObservation GenerateArenaObservation()
         {
             Debug.Assert(Time.frameCount != m_LastKnownArenaState.FrameMeasured,
@@ -149,8 +171,8 @@ namespace BossFight.BossCharacter
             float distanceFront;
             if (hitFront.collider == null)
             {
-                Debug.LogWarning("Missing a forward raycast - must assume we're on top of a wall.");
-                distanceFront = 0f;
+                Debug.LogWarning("Missing a forward raycast - might be in a bugged position");
+                distanceFront = k_MaxRaycastDistance;
             }
             else
             {
@@ -162,8 +184,8 @@ namespace BossFight.BossCharacter
             float distanceBack;
             if (hitBack.collider == null)
             {
-                Debug.LogWarning("Missing a backwards raycast - must assume we're on top of a wall.");
-                distanceBack = 0f;
+                Debug.LogWarning("Missing a backwards raycast - might be in a bugged position.");
+                distanceBack = k_MaxRaycastDistance;
             }
             else
             {
@@ -176,7 +198,7 @@ namespace BossFight.BossCharacter
             if (hitGround.collider == null)
             {
                 Debug.LogWarning("Missing a ground raycast - did we fall off the edge?");
-                distanceGround = 0f;
+                distanceGround = k_MaxRaycastDistance;
             }
             else
             {
@@ -191,13 +213,14 @@ namespace BossFight.BossCharacter
         {
             Debug.Assert(Time.frameCount != m_LastKnownPlayerState.FrameMeasured,
             "Should only generate at most one observation per frame.");
-            // Create some floats for computing means later
+            var playerObjects = new GameObject[m_Players.Count];
             var locations = new Vector2[m_Players.Count];
             var numInBounds = 0;
 
             for (var i = 0; i < m_Players.Count; ++i)
             {
                 var player = m_Players[i];
+                playerObjects[i] = player.gameObject;
                 var playerPosition = player.transform.position;
                 if (CurrentBounds.Contains(playerPosition))
                 {
@@ -206,7 +229,8 @@ namespace BossFight.BossCharacter
                 locations[i] = transform.InverseTransformPoint(playerPosition);
             }
 
-            return new PlayerObservation(Time.frameCount, locations, numInBounds);
+            return new PlayerObservation(Time.frameCount, playerObjects, locations, numInBounds);
         }
+        #endregion
     }
 }

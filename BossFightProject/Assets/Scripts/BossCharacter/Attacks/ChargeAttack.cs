@@ -31,11 +31,24 @@ namespace BossFight.BossCharacter
         public override bool CanStart(BossSensors sensors)
         {
             var arena = sensors.CurrentArenaObservation;
+            if (arena.DistanceFromFrontWall < m_FrontClearanceNeeded)
+            {
+                return false;
+            }
+
+            var bounds = sensors.CurrentBounds;
             var player = sensors.CurrentPlayerObservation;
-            return arena.DistanceFromFrontWall > m_FrontClearanceNeeded &&
-                player.PlayerPositionsLocal.Any(v =>
-                    IsPlayerOnGround(v, arena.DistanceFromGround)
-                    && v.x > m_PlayerMinimumDistance);
+            foreach (var position in player.PlayerPositionsLocal)
+            {
+                var positionGlobal = sensors.transform.TransformPoint(position);
+                if (positionGlobal.y >= bounds.min.y && positionGlobal.y <= bounds.max.y
+                    && position.x > m_PlayerMinimumDistance)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public override void Begin(BossSensors sensors, BossStats stats, HurtboxManager hurtboxes)

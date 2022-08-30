@@ -27,5 +27,6 @@ namespace BossFight.Constants
         public const string TriggerMoveFinished = "FinishMove";
         public const string TriggerChargeAttack = "Attack_BasicCharge";
         public const string TriggerTurnAround = "TurnAround";
+        public const string TriggerBackUp = "BackUp";
     }
 }
