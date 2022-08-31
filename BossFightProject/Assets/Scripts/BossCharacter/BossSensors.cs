@@ -24,11 +24,6 @@ namespace BossFight.BossCharacter
         PlayerObservation m_LastKnownPlayerState;
         ArenaObservation m_LastKnownArenaState;
 
-        [field: SerializeField]
-        public GameObjectVariableInstancer FrontAttackTarget { get; private set; }
-        [field: SerializeField]
-        public GameObjectVariableInstancer RearAttackTarget { get; private set; }
-
         #endregion
 
         #region Properties

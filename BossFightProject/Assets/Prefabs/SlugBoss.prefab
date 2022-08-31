@@ -172,54 +172,6 @@ MonoBehaviour:
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
---- !u!1 &2119944993
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2119944994}
-  - component: {fileID: 2119944995}
-  m_Layer: 0
-  m_Name: ColorSetter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2119944994
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2119944993}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3594937670289495737}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2119944995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2119944993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49efc7680f5ab294ba79def2e6519e7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ColorToUse: {r: 0.7058824, g: 0.050980397, b: 1, a: 1}
-  SpriteTargets: []
-  MeshTargets:
-  - {fileID: 8663223190474224433}
 --- !u!1 &48916392668201608
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,6 +602,7 @@ GameObject:
   - component: {fileID: 406564485}
   - component: {fileID: 1683813188}
   - component: {fileID: 1683813187}
+  - component: {fileID: 8888736340845340989}
   m_Layer: 3
   m_Name: SlugHeadModel
   m_TagString: Untagged
@@ -770,9 +723,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426179db5d084a6897a1636e6bed0183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Animators: []
+  m_Animators:
+  - {fileID: 8888736340845340989}
   <Owner>k__BackingField: {fileID: 5357117053502959189}
   DamageAmount: 1
+--- !u!95 &8888736340845340989
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3274448175713715223}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bc9c582494d2fb845ab4c2846bb9d772, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3389707533344177246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,7 +1002,6 @@ GameObject:
   - component: {fileID: 6100350196055129054}
   - component: {fileID: 8663223190474224433}
   - component: {fileID: 494326676}
-  - component: {fileID: 494326678}
   - component: {fileID: 494326677}
   m_Layer: 0
   m_Name: polySurface1
@@ -1048,8 +1021,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2119944994}
+  m_Children: []
   m_Father: {fileID: 8743418458901820205}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1133,26 +1105,6 @@ PolygonCollider2D:
       - {x: -113, y: -14.2}
       - {x: 49.2, y: -40.5}
       - {x: 59.4, y: 60}
---- !u!95 &494326678
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4290511698385625276}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bc9c582494d2fb845ab4c2846bb9d772, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &494326677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1165,8 +1117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426179db5d084a6897a1636e6bed0183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Animators:
-  - {fileID: 494326678}
+  m_Animators: []
   <Owner>k__BackingField: {fileID: 5357117053502959189}
   DamageAmount: 1
 --- !u!1 &4509569044484447261
@@ -1401,7 +1352,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.6, y: -2.87, z: 0.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 857400952605300786}
   - {fileID: 1671316076}
@@ -1482,8 +1433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca152625addc49898af27fdebc786330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <FrontAttackTarget>k__BackingField: {fileID: 0}
-  <RearAttackTarget>k__BackingField: {fileID: 0}
 --- !u!50 &1467218964
 Rigidbody2D:
   serializedVersion: 4

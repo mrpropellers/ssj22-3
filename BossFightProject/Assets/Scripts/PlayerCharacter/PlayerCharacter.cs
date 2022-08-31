@@ -19,7 +19,7 @@ namespace BossFight
         [SerializeField]
         FloatConstant PostRespawnInvulnerabilityTime;
         // TODO: Replace with a different value
-        FloatConstant PostDamageInvulnerabilityTime => PostRespawnInvulnerabilityTime;
+        float PostDamageInvulnerabilityTime => PostRespawnInvulnerabilityTime.Value;
         #endregion
 
 
@@ -30,8 +30,6 @@ namespace BossFight
         BoolVariableInstancer PlayerHasControl;
         [SerializeField]
         IntVariableInstancer PlayerHealth;
-        [SerializeField]
-        BoolVariableInstancer PlayerIsGrounded;
         #endregion
 
 
@@ -47,7 +45,6 @@ namespace BossFight
         #region Properties
 
         public bool IsInvulnerable => m_InvulnerabilityTimeRemaining > 0f;
-        public bool IsOnGround => PlayerIsGrounded.Value;
         #endregion
         public event OnTrackedInstanceDestroyed OnDestroyed;
 
@@ -75,15 +72,6 @@ namespace BossFight
             if (IsInvulnerable)
             {
                 m_InvulnerabilityTimeRemaining -= Time.deltaTime;
-            }
-        }
-
-        void OnValidate()
-        {
-            if (PostRespawnInvulnerabilityTime.Value < PostRespawnFreezeTime.Value)
-            {
-                Debug.LogWarning("Invulnerability time must at least be as long as the freeze time");
-                PostRespawnInvulnerabilityTime.Value = PostRespawnFreezeTime.Value;
             }
         }
 
@@ -130,7 +118,14 @@ namespace BossFight
             if (!IsInvulnerable)
             {
                 PlayerHealth.Value -= damageArgs.Amount;
-                m_InvulnerabilityTimeRemaining = PostDamageInvulnerabilityTime.Value;
+                if (PlayerHealth.Value <= 0)
+                {
+                    Die();
+                }
+                else
+                {
+                    m_InvulnerabilityTimeRemaining = PostDamageInvulnerabilityTime;
+                }
             }
         }
 

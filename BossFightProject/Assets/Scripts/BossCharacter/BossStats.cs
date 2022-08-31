@@ -27,6 +27,9 @@ namespace BossFight.BossCharacter
         [SerializeField]
         internal List<BossMove> Attacks;
 
+        // TODO: Add a list of "openers" that always need to be processed first, in order
+
+
         void Reset()
         {
             GroundMovementStats = new GroundMovement()
