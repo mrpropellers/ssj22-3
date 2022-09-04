@@ -18,6 +18,13 @@ namespace BossFight
             m_CanProcessInput.Variable.Changed.RegisterListener(this);
         }
 
+        protected override void HandleAttacking()
+        {
+            if (!_attackToConsume) return;
+            Debug.Log("Attacking.");
+            _attackToConsume = false;
+        }
+
         public void OnEventRaised(bool playerHasControl)
         {
             // Player input handler gets fully disabled when the player doesn't have control of the character
