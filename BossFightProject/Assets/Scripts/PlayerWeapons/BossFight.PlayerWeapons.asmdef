@@ -1,18 +1,15 @@
 {
-    "name": "BossFight.PlayerCharacter",
+    "name": "BossFight.PlayerWeapons",
     "rootNamespace": "BossFight",
     "references": [
-        "GUID:29492541a59d04a81b47a7f225e8a22d",
-        "GUID:517d68e952e134045810d1ed7411423b",
-        "GUID:14165214884ae4a619bfb290f28194a7",
-        "GUID:9ba97543729ddaf41a40f945ee55eeaa"
+        "GUID:517d68e952e134045810d1ed7411423b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

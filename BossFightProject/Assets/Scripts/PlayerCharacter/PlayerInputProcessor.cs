@@ -10,6 +10,9 @@ namespace BossFight
         [SerializeField]
         BoolVariableInstancer m_CanProcessInput;
 
+        [SerializeField]
+        SaltShakerWeapon m_Weapon;
+
         public bool CanProcessInput => m_CanProcessInput.Value;
 
         protected override void Awake()
@@ -21,7 +24,11 @@ namespace BossFight
         protected override void HandleAttacking()
         {
             if (!_attackToConsume) return;
-            Debug.Log("Attacking.");
+            if (m_Weapon.CanFire)
+            {
+                Debug.Log("Attacking.");
+                m_Weapon.Fire();
+            }
             _attackToConsume = false;
         }
 

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace BossFight
 {
-    [RequireComponent(typeof(Damageable))]
+    [RequireComponent(typeof(DamagePasserOncePerFrame))]
     public class PlayerCharacter : MonoBehaviour, ITrackableInstance
     {
         #region Player Stats
@@ -57,7 +57,7 @@ namespace BossFight
                 gameObject.tag = Tags.Player;
             }
 
-            GetComponent<Damageable>().OnDamageReceived += HandleIncomingDamage;
+            GetComponent<DamagePasserOncePerFrame>().OnDamageAttempt += HandleIncomingDamage;
             Debug.Log("Registering self to InstanceTracker");
             InstanceTrackingList<PlayerCharacter>.Add(this);
         }
@@ -113,20 +113,28 @@ namespace BossFight
             PlayerHasControl.Value = true;
         }
 
-        void HandleIncomingDamage(object _, Damageable.DamageEventArgs damageArgs)
+        DamageResult HandleIncomingDamage(DamageAttempt damage)
         {
-            if (!IsInvulnerable)
+            var damageToApply = IsInvulnerable ? 0 : Mathf.RoundToInt(damage.DamageAmount);
+            if (damageToApply > 0)
             {
-                PlayerHealth.Value -= damageArgs.Amount;
+                PlayerHealth.Value -= damageToApply;
                 if (PlayerHealth.Value <= 0)
                 {
                     Die();
                 }
                 else
                 {
-                    m_InvulnerabilityTimeRemaining = PostDamageInvulnerabilityTime;
+                    StartInvulnerabilityPeriod(PostDamageInvulnerabilityTime);
                 }
             }
+
+            return new DamageResult(damageToApply);
+        }
+
+        void StartInvulnerabilityPeriod(float invulnerabilitySeconds)
+        {
+            m_InvulnerabilityTimeRemaining = invulnerabilitySeconds;
         }
 
         void ResetStats()

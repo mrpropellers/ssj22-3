@@ -134,7 +134,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsGrounded
       value: 
-      objectReference: {fileID: 1032705639}
+      objectReference: {fileID: 0}
     - target: {fileID: 5911309695814264500, guid: 01b433369e8f93a4d968fa4158003eb2,
         type: 3}
       propertyPath: m_RootOrder
@@ -465,18 +465,6 @@ Transform:
   m_Father: {fileID: 1995276373}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1032705639 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1032705648, guid: 01b433369e8f93a4d968fa4158003eb2,
-    type: 3}
-  m_PrefabInstance: {fileID: 153367592}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43b8675a4f46440369248598e656cfbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1160968423
 GameObject:
   m_ObjectHideFlags: 0
@@ -5048,7 +5036,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &2049342659
@@ -5473,6 +5461,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3695215110507694900, guid: be778b165a5b6a246a66750959d5b93f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8259079320218958830, guid: be778b165a5b6a246a66750959d5b93f,
         type: 3}
       propertyPath: m_RespawnPoint
