@@ -81,10 +81,12 @@ namespace BossFight
 
         protected override void FixedUpdate()
         {
-            if (m_CanProcessInput.Value)
+            if (!m_CanProcessInput.Value)
             {
-                base.FixedUpdate();
+                // Clear any frameInput data that was gathered if the player doesn't have control
+                _frameInput = new FrameInput();
             }
+            base.FixedUpdate();
         }
 
         bool HasHitCeiling(RaycastHit2D[] hits)

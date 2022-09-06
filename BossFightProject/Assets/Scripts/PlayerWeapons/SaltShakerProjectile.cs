@@ -18,22 +18,39 @@ namespace BossFight
         Hurtbox m_Hurtbox;
         SpriteRenderer m_Renderer;
         bool m_IsCleaningUp;
+        int m_NumBounces;
 
+        float m_InitialLifespan;
         internal float Lifespan;
         internal ObjectPool<SaltShakerProjectile> Pool;
+
+        [SerializeField]
+        AnimationCurve m_DamageCurve;
 
         [SerializeField]
         [Range(0f, 10f)]
         float m_CleanupDelay = 3f;
 
         [SerializeField]
+        [Range(1f, 3f)]
+        float m_BounceDamageMultiplier = 1.75f;
+
+        [SerializeField]
+        [Range(0f, 5f)]
+        float m_LifespanReductionOnBounce = 1.5f;
+
+        [SerializeField]
         [Range(1, 5)]
         int m_NumSpins = 3;
+
+        [SerializeField]
+        float m_WallUpForce = 10f;
 
         [SerializeField]
         [Range(0.5f, 2f)]
         float m_SpinPeriodSeconds = 1f;
 
+        float RatioLifespanLeft => Mathf.Clamp(Lifespan, 0f, m_InitialLifespan) / m_InitialLifespan;
 
         float SpinPeriodFudged => m_SpinPeriodSeconds +
             Random.Range(-0.5f, .5f) * m_SpinPeriodSeconds;
@@ -56,8 +73,11 @@ namespace BossFight
         void OnEnable()
         {
             m_IsCleaningUp = false;
+            m_InitialLifespan = Lifespan;
+            m_NumBounces = 0;
             m_Particles.Play();
             m_Hurtbox.Activate();
+            m_Hurtbox.DamageAmount = m_DamageCurve.Evaluate(0);
             m_Renderer.enabled = true;
             //m_Renderer.gameObject.SetActive(true);
             m_Renderer.transform
@@ -73,14 +93,16 @@ namespace BossFight
 
         void OnDisable()
         {
-            m_Hurtbox.Deactivate();
         }
 
         void Update()
         {
             if (m_IsCleaningUp) return;
             Lifespan -= Time.deltaTime;
-            if (Lifespan <= 0f)
+            m_Hurtbox.DamageAmount =
+                m_DamageCurve.Evaluate(1.0f - RatioLifespanLeft) + m_NumBounces * m_BounceDamageMultiplier;
+            // Ensure floating shakers don't stick around forever
+            if (Lifespan < -m_InitialLifespan)
             {
                 StartCleanUp();
             }
@@ -91,11 +113,22 @@ namespace BossFight
             if (m_IsCleaningUp) return;
             Debug.Assert(result.AttemptWasProcessed,
                 "This event should only be invoked if the damage receiver did not ignore the damage attempt");
-            StartCleanUp();
+            Lifespan -= m_LifespanReductionOnBounce * (float)(result.AmountApplied + 1);
+            m_NumBounces++;
+            if (Lifespan <= 0f)
+            {
+                StartCleanUp();
+            }
+            // If we hit a wall, bounce upwards a little
+            else if (result.AmountApplied == 0)
+            {
+                m_Rigidbody.AddForce(Vector2.up * m_WallUpForce);
+            }
         }
 
         void StartCleanUp()
         {
+            m_Hurtbox.Deactivate();
             m_Particles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
             m_IsCleaningUp = true;
             m_Renderer.enabled = false;

@@ -23,16 +23,15 @@ namespace BossFight
 
         [SerializeField]
         [Range(0f, 90f)]
-        float m_ProjectileArc = 30f;
+        float m_ProjectileArc = 35f;
 
         [SerializeField]
         [Range(0.1f, 50f)]
         float m_ProjectileSpeed;
 
-        // This is just a failsafe to ensure projectiles don't live forever if they for some reason don't hit anything
         [SerializeField]
-        [Range(5f, 20f)]
-        float m_ProjectileLifespan = 10f;
+        [Range(2f, 20f)]
+        float m_ProjectileLifespan = 5f;
 
         [SerializeField]
         [Range(0f, 0.5f)]

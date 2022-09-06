@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a5fa92a5dc0486086b74a476e1de89e, type: 3}
-  m_Name: IdleBoss
+  m_Name: BossBrainPhase1
   m_EditorClassIdentifier: 
   GroundMovementStats:
     SpeedScalar: 1
-  DecisionCooldown: 3
+  DecisionCooldown: 1.8
   JumpTrajectoryCurve:
     serializedVersion: 2
     m_Curve:
@@ -59,4 +59,5 @@ MonoBehaviour:
     m_RotationOrder: 4
   JumpAirTime: 5
   Attacks:
+  - {fileID: 11400000, guid: 88913138ddc41704c966afe88431477d, type: 2}
   - {fileID: 11400000, guid: fa04fadc76807d1449ab7603f5477262, type: 2}

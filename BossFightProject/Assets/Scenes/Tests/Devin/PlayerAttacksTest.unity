@@ -130,50 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 922066050, guid: 01b433369e8f93a4d968fa4158003eb2, type: 3}
-      propertyPath: <Kickback>k__BackingField
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1179228030471417680, guid: 01b433369e8f93a4d968fa4158003eb2,
-        type: 3}
-      propertyPath: ShapeModule.angle
-      value: 40.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 1179228030471417680, guid: 01b433369e8f93a4d968fa4158003eb2,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1179228030471417680, guid: 01b433369e8f93a4d968fa4158003eb2,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1179228030471417680, guid: 01b433369e8f93a4d968fa4158003eb2,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.minScalar
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1179228030471417680, guid: 01b433369e8f93a4d968fa4158003eb2,
-        type: 3}
-      propertyPath: InheritVelocityModule.m_Curve.scalar
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 1179228030471417680, guid: 01b433369e8f93a4d968fa4158003eb2,
-        type: 3}
-      propertyPath: InitialModule.gravityModifier.scalar
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1179228030471417680, guid: 01b433369e8f93a4d968fa4158003eb2,
-        type: 3}
-      propertyPath: InheritVelocityModule.m_Curve.minScalar
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1179228030471417680, guid: 01b433369e8f93a4d968fa4158003eb2,
-        type: 3}
-      propertyPath: InheritVelocityModule.m_Curve.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5911309695814264500, guid: 01b433369e8f93a4d968fa4158003eb2,
         type: 3}
       propertyPath: m_RootOrder

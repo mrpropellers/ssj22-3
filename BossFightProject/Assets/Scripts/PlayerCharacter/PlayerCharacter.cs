@@ -117,7 +117,7 @@ namespace BossFight
 
         DamageResult HandleIncomingDamage(DamageAttempt damage)
         {
-            var damageToApply = IsInvulnerable ? 0 : Mathf.RoundToInt(damage.DamageAmount);
+            var damageToApply = IsInvulnerable ? 0 : Mathf.RoundToInt(damage.FinalDamageAmount);
             if (damageToApply > 0)
             {
                 PlayerHealth.Value -= damageToApply;
