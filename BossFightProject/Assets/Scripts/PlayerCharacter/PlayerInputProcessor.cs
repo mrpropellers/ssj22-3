@@ -1,3 +1,5 @@
+using DG.Tweening;
+using LeftOut.JamAids;
 using TarodevController;
 using UnityAtoms;
 using UnityAtoms.BaseAtoms;
@@ -7,27 +9,61 @@ namespace BossFight
 {
     public class PlayerInputProcessor : PlayerController, IAtomListener<bool>
     {
+        float m_LastAttackPressedTime = float.NegativeInfinity;
+        int m_LastAttackPressedFrame = int.MinValue;
+        ForwardProviderSideView m_ForwardProvider;
+
+        // NOTE: If this is smaller than attack cooldown could end up in an awkward
+        //      situation where we get two attacks off one buffered button press
+        [SerializeField]
+        [Range(0f, 1f)]
+        float m_AttackBufferTime = 0.5f;
+
         [SerializeField]
         BoolVariableInstancer m_CanProcessInput;
 
         [SerializeField]
         SaltShakerWeapon m_Weapon;
 
-        public bool CanProcessInput => m_CanProcessInput.Value;
+        bool AttackIsInBuffer =>
+            Time.time - m_LastAttackPressedTime < m_AttackBufferTime
+            // Just in case the game is running very slow, always check whether attack was
+            // pressed last frame
+            || Time.frameCount - m_LastAttackPressedFrame < 2;
+
+    public bool CanProcessInput => m_CanProcessInput.Value;
 
         protected override void Awake()
         {
             base.Awake();
             m_CanProcessInput.Variable.Changed.RegisterListener(this);
+            // Ensure no leftover data from previous editor runs
+            m_LastAttackPressedFrame = Time.frameCount - 10;
+            m_LastAttackPressedTime = Time.time - m_AttackBufferTime * 2f;
+            m_ForwardProvider = GetComponent<ForwardProviderSideView>();
         }
 
         protected override void HandleAttacking()
         {
-            if (!_attackToConsume) return;
+            if (!_attackToConsume && !AttackIsInBuffer) return;
             if (m_Weapon.CanFire)
             {
                 Debug.Log("Attacking.");
                 m_Weapon.Fire();
+                var forward = m_ForwardProvider.Forward;
+                transform.DOBlendableLocalMoveBy(-forward * m_Weapon.Kickback, 0.05f)
+                    .SetEase(Ease.OutCirc)
+                    .SetRelative();
+                transform.DOBlendablePunchRotation(forward.x * Vector3.forward * 10f, 0.075f)
+                    .SetEase(Ease.OutCirc)
+                    .SetRelative();
+                //_rb.AddForce(-forward * m_Weapon.Kickback, ForceMode2D.Impulse);
+                //_rb.AddTorque(-forward.x * m_Weapon.Kickback, ForceMode2D.Impulse);
+            }
+            else if (_attackToConsume)
+            {
+                m_LastAttackPressedFrame = Time.frameCount;
+                m_LastAttackPressedTime = Time.time;
             }
             _attackToConsume = false;
         }

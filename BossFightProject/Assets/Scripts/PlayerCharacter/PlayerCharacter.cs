@@ -3,12 +3,14 @@ using System.Collections;
 using LeftOut;
 using LeftOut.GameplayManagement;
 using LeftOut.GlobalConsts;
+using LeftOut.JamAids;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace BossFight
 {
     [RequireComponent(typeof(DamagePasserOncePerFrame))]
+    [RequireComponent(typeof(ForwardProviderSideView))]
     public class PlayerCharacter : MonoBehaviour, ITrackableInstance
     {
         #region Player Stats
