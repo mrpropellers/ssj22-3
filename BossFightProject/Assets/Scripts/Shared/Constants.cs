@@ -6,6 +6,7 @@ namespace BossFight.Constants
     {
         public const string RigTarget = "BossRig";
         public const string Walls = "Level";
+        public const string MusicPlayer = "MusicPlayer";
     }
 
     public static class Layers

@@ -2,7 +2,9 @@
     "name": "BossFight.PlayerWeapons",
     "rootNamespace": "BossFight",
     "references": [
-        "GUID:517d68e952e134045810d1ed7411423b"
+        "GUID:517d68e952e134045810d1ed7411423b",
+        "GUID:29492541a59d04a81b47a7f225e8a22d",
+        "GUID:14165214884ae4a619bfb290f28194a7"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 
 using LeftOut.JamAids;
+using UnityAtoms.BaseAtoms;
 
 namespace BossFight
 {
@@ -14,6 +15,9 @@ namespace BossFight
         float m_LastFiredTime;
         ForwardProviderSideView m_ForwardProvider;
         Vector2 m_InitialLocalPosition;
+
+        [SerializeField]
+        VoidEvent m_OnFire;
 
         [SerializeField]
         GameObject m_ProjectilePrefab;
@@ -108,6 +112,7 @@ namespace BossFight
             var trajectory =
                 Quaternion.Euler(forwardSign * m_ProjectileArc * Vector3.forward) * spriteForward;
             projectile.Rigidbody.velocity = trajectory * m_ProjectileSpeed;
+            m_OnFire.Raise();
         }
     }
 }

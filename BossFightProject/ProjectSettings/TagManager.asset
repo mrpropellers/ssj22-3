@@ -9,6 +9,7 @@ TagManager:
   - Level
   - FrontAim
   - RearAim
+  - MusicPlayer
   layers:
   - Default
   - TransparentFX
