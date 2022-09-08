@@ -19,3 +19,6 @@ From the Unity Hub | Projects tab, click "Open," navigate to where Git checked o
 
 # Ask for help if you need it!
 There are several people in the Discord that can help you if you get stuck!
+
+# Acknowledgements
+Splat/Goo effects taken from https://github.com/mixandjam/Splatoon-Ink
