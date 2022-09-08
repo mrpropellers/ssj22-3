@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using LeftOut.JamAids;
 using TarodevController;
@@ -12,6 +13,7 @@ namespace BossFight
         float m_LastAttackPressedTime = float.NegativeInfinity;
         int m_LastAttackPressedFrame = int.MinValue;
         ForwardProviderSideView m_ForwardProvider;
+        float m_TimeUntilNextFootstep;
 
         // NOTE: If this is smaller than attack cooldown could end up in an awkward
         //      situation where we get two attacks off one buffered button press
@@ -20,10 +22,20 @@ namespace BossFight
         float m_AttackBufferTime = 0.5f;
 
         [SerializeField]
+        [Range(0.01f, 1f)]
+        float m_FootstepPeriod = 0.5f;
+
+        [SerializeField]
         BoolVariableInstancer m_CanProcessInput;
 
         [SerializeField]
         SaltShakerWeapon m_Weapon;
+
+        [field: SerializeField]
+        public VoidEvent OnJumped { get; private set; }
+
+        [field: SerializeField]
+        public VoidEvent OnFootstep { get; private set; }
 
         bool AttackIsInBuffer =>
             Time.time - m_LastAttackPressedTime < m_AttackBufferTime
@@ -31,7 +43,7 @@ namespace BossFight
             // pressed last frame
             || Time.frameCount - m_LastAttackPressedFrame < 2;
 
-    public bool CanProcessInput => m_CanProcessInput.Value;
+        public bool CanProcessInput => m_CanProcessInput.Value;
 
         protected override void Awake()
         {
@@ -41,6 +53,33 @@ namespace BossFight
             m_LastAttackPressedFrame = Time.frameCount - 10;
             m_LastAttackPressedTime = Time.time - m_AttackBufferTime * 2f;
             m_ForwardProvider = GetComponent<ForwardProviderSideView>();
+            Jumped += OnJumped.Raise;
+            m_TimeUntilNextFootstep = m_FootstepPeriod;
+        }
+
+        void OnDestroy()
+        {
+            Jumped -= OnJumped.Raise;
+        }
+
+        protected override void HandleHorizontal()
+        {
+            base.HandleHorizontal();
+            if (!_grounded) return;
+            var speedFactor = Mathf.Clamp01(Mathf.Abs(_speed.x) / _stats.MaxSpeed);
+            m_TimeUntilNextFootstep -= Time.deltaTime * speedFactor;
+            if (m_TimeUntilNextFootstep <= 0f)
+            {
+                OnFootstep.Raise();
+                // Correct for footstep sounds getting too far behind due to stutter
+                if (m_TimeUntilNextFootstep <= -m_FootstepPeriod * .5f)
+                {
+                    m_TimeUntilNextFootstep = 0;
+                }
+
+                m_TimeUntilNextFootstep += m_FootstepPeriod;
+            }
+
         }
 
         protected override void HandleAttacking()

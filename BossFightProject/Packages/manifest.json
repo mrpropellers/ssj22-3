@@ -10,6 +10,7 @@
     "com.unity.render-pipelines.universal": "12.1.7",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.ugui": "1.0.0",
+    "com.unity.visualeffectgraph": "12.1.7",
     "leftout.toolkit": "file:../../LeftOutToolkit/LeftOutUnityTools",
     "leftout.urp-cel-shading": "https://github.com/mrpropellers/Unity-URP-CelShadeLit.git?path=/CelShadeLit#as-package",
     "leftout.urp-outlines": "https://github.com/mrpropellers/Unity-URP-Outlines.git?path=/Outlines#as-package",

@@ -202,7 +202,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -869.99994, y: -91}
+  m_AnchoredPosition: {x: -870, y: -91.00003}
   m_SizeDelta: {x: -273.31726, y: -87.25311}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &7490282085525433491
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Options
+  m_text: options
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -711,7 +711,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Start
+  m_text: 'start
 
 '
   m_isRightToLeft: 0
@@ -904,9 +904,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 4603a5aba2c4aa64c90fd6f41f83110b, type: 2}
-        m_TargetAssemblyTypeName: UnityAtoms.SceneMgmt.ChangeScene, UnityAtoms.UnityAtomsSceneMgmt.Runtime
-        m_MethodName: Do
+      - m_Target: {fileID: 11400000, guid: ab6c1aeae0801f94aa3f6aff6fd5399f, type: 2}
+        m_TargetAssemblyTypeName: UnityAtoms.BaseAtoms.VoidEvent, UnityAtoms.UnityAtomsBaseAtoms.Runtime
+        m_MethodName: Raise
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -982,7 +982,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Untitled Dreams and Nightmares Boss Fight Game
+  m_text: slug fest
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1009,7 +1009,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 67.1
+  m_fontSize: 169.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1359,6 +1359,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1069992349811262320, guid: 4ca69cfb89bdb5746a1c15991c8386f5,
+        type: 3}
+      propertyPath: m_text
+      value: 'back
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 1383561402535825505, guid: 4ca69cfb89bdb5746a1c15991c8386f5,
         type: 3}
       propertyPath: m_Name
@@ -1488,6 +1495,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: QuitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 633314552444079918, guid: c9fc9ca24f41c9a48b3920a926aaf69f,
+        type: 3}
+      propertyPath: m_text
+      value: quit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9fc9ca24f41c9a48b3920a926aaf69f, type: 3}

@@ -2,6 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 using LeftOut;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using UnityEngine.Pool;
 using Random = UnityEngine.Random;
@@ -13,12 +14,15 @@ namespace BossFight
     //[RequireComponent(typeof(SpriteRenderer))]
     public class SaltShakerProjectile : MonoBehaviour
     {
+        const int k_DoubleBounceBuffer = 30;
+
         Rigidbody2D m_Rigidbody;
         ParticleSystem m_Particles;
         Hurtbox m_Hurtbox;
         SpriteRenderer m_Renderer;
         bool m_IsCleaningUp;
         int m_NumBounces;
+        int m_HurtboxReactivateFrame;
 
         float m_InitialLifespan;
         internal float Lifespan;
@@ -49,6 +53,12 @@ namespace BossFight
         [SerializeField]
         [Range(0.5f, 2f)]
         float m_SpinPeriodSeconds = 1f;
+
+        [field: SerializeField]
+        public VoidEvent OnBounce { get; private set;  }
+
+        [field: SerializeField]
+        public VoidEvent OnBreak { get; private set;  }
 
         float RatioLifespanLeft => Mathf.Clamp(Lifespan, 0f, m_InitialLifespan) / m_InitialLifespan;
 
@@ -98,6 +108,10 @@ namespace BossFight
         void Update()
         {
             if (m_IsCleaningUp) return;
+            if (Time.frameCount >= m_HurtboxReactivateFrame && !m_Hurtbox.IsOn)
+            {
+                m_Hurtbox.Activate();
+            }
             Lifespan -= Time.deltaTime;
             m_Hurtbox.DamageAmount =
                 m_DamageCurve.Evaluate(1.0f - RatioLifespanLeft) + m_NumBounces * m_BounceDamageMultiplier;
@@ -114,6 +128,8 @@ namespace BossFight
             Debug.Assert(result.AttemptWasProcessed,
                 "This event should only be invoked if the damage receiver did not ignore the damage attempt");
             Lifespan -= m_LifespanReductionOnBounce * (float)(result.AmountApplied + 1);
+            m_Hurtbox.Deactivate();
+            m_HurtboxReactivateFrame = Time.frameCount + k_DoubleBounceBuffer;
             m_NumBounces++;
             if (Lifespan <= 0f)
             {
@@ -123,11 +139,17 @@ namespace BossFight
             else if (result.AmountApplied == 0)
             {
                 m_Rigidbody.AddForce(Vector2.up * m_WallUpForce);
+                OnBounce.Raise();
+            }
+            else
+            {
+                OnBounce.Raise();
             }
         }
 
         void StartCleanUp()
         {
+            OnBreak.Raise();
             m_Hurtbox.Deactivate();
             m_Particles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
             m_IsCleaningUp = true;

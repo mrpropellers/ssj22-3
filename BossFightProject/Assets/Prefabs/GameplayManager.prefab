@@ -42,7 +42,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8259079320218958833}
   - component: {fileID: 8259079320218958830}
-  - component: {fileID: 488887954}
   - component: {fileID: 488887955}
   - component: {fileID: 4667476523091415443}
   m_Layer: 0
@@ -85,30 +84,6 @@ MonoBehaviour:
     _usage: 0
     _event: {fileID: 11400000, guid: 23c91bf8126a5b94d977d6e480b57b27, type: 2}
     _eventInstancer: {fileID: 0}
-    _variable: {fileID: 0}
-    _variableInstancer: {fileID: 0}
---- !u!114 &488887954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8259079320218958831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7966d91e2e312a42b13954ce3532c47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_KillEvent:
-    _usage: 0
-    _event: {fileID: 11400000, guid: 23c91bf8126a5b94d977d6e480b57b27, type: 2}
-    _eventInstancer: {fileID: 0}
-    _variable: {fileID: 0}
-    _variableInstancer: {fileID: 0}
-  m_PlayerHealth:
-    _usage: 3
-    _value: 0
-    _constant: {fileID: 0}
     _variable: {fileID: 0}
     _variableInstancer: {fileID: 0}
 --- !u!114 &488887955
@@ -180,7 +155,12 @@ PrefabInstance:
     - target: {fileID: 7490282086143894283, guid: 4155e2acb28cd014e83cfdce912e0421,
         type: 3}
       propertyPath: m_text
-      value: Restart
+      value: resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490282086143894283, guid: 4155e2acb28cd014e83cfdce912e0421,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7490282086657977587, guid: 4155e2acb28cd014e83cfdce912e0421,
         type: 3}
