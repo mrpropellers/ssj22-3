@@ -22,3 +22,6 @@ There are several people in the Discord that can help you if you get stuck!
 
 # Acknowledgements
 Splat/Goo effects taken from https://github.com/mixandjam/Splatoon-Ink
+Character Controller binaries built from example code by TaroDev: https://www.patreon.com/tarodev
+Health Bar/Damage Popup effects based on example code from Code Monkey: https://unitycodemonkey.com/
+Mossy Stone: https://opengameart.org/content/mossy-stone-rock
