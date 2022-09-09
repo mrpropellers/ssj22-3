@@ -11,7 +11,7 @@ namespace BossFight.BossCharacter
     {
         BossSensors m_Sensors;
         UnityEngine.Animator m_Animator;
-        HurtboxManager m_Hurtboxes;
+        HitboxManager m_Hitboxes;
         BossMove m_CurrentMove;
 
         float m_RemainingDecisionCooldown;
@@ -21,16 +21,16 @@ namespace BossFight.BossCharacter
 
         // Explicitly check for null with == here so we can use null-coalescing ?.Function() calls later
         // NOTE: We'll still get a warning from Rider, but the warning is wrong.
-        public HurtboxManager Hurtboxes => m_Hurtboxes == null ? null : m_Hurtboxes;
+        public HitboxManager hitboxes => m_Hitboxes == null ? null : m_Hitboxes;
 
         void Start()
         {
             m_Sensors = GetComponent<BossSensors>();
             m_Animator = GetComponent<UnityEngine.Animator>();
-            m_Hurtboxes = GetComponent<HurtboxManager>();
-            if (m_Hurtboxes == null)
+            m_Hitboxes = GetComponent<HitboxManager>();
+            if (m_Hitboxes == null)
             {
-                Debug.LogWarning($"No {nameof(HurtboxManager)} attached - may not activate hurtboxes correctly.");
+                Debug.LogWarning($"No {nameof(HitboxManager)} attached - may not activate hurtboxes correctly.");
             }
 
             m_RemainingDecisionCooldown = m_BossStats.DecisionCooldown * 2;
@@ -75,7 +75,7 @@ namespace BossFight.BossCharacter
             m_Animator.SetTrigger(AnimatorParameters.TriggerMoveFinished);
             m_CurrentMove = null;
             m_RemainingDecisionCooldown = m_BossStats.DecisionCooldown;
-            Hurtboxes?.DeactivateAll();
+            hitboxes?.DeactivateAll();
         }
 
         void PickNewMove()
@@ -88,7 +88,7 @@ namespace BossFight.BossCharacter
                     Debug.Log($"Starting attack: {attack}");
                     m_Animator.SetTrigger(attack.AnimatorTrigger);
 
-                    attack.Begin(m_Sensors, m_BossStats, Hurtboxes);
+                    attack.Begin(m_Sensors, m_BossStats, hitboxes);
                     m_CurrentMove = attack;
                     return;
                 }

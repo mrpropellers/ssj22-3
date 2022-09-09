@@ -50,7 +50,7 @@ namespace BossFight.BossCharacter
             return false;
         }
 
-        public override void Begin(BossSensors sensors, BossStats stats, HurtboxManager hurtboxes)
+        public override void Begin(BossSensors sensors, BossStats stats, HitboxManager hitboxes)
         {
             var totalChargingDistance = sensors.CurrentArenaObservation.DistanceFromFrontWall;
             var movementStats = stats.GroundMovementStats;
@@ -61,7 +61,7 @@ namespace BossFight.BossCharacter
                 .SetDelay(windup);
             m_TotalAttackTime = windup + chargeTime;
             m_StartTime = Time.time;
-            hurtboxes.ActivateAfter(windup);
+            hitboxes.ActivateAfter(windup);
             Debug.Log($"Charging for {m_TotalAttackTime} to get to {targetX}");
         }
     }

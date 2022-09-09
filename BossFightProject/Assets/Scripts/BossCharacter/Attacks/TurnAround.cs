@@ -39,7 +39,7 @@ namespace BossFight.BossCharacter
             sensors.CurrentPlayerObservation.PlayerPositionsLocal.Length;
 
         // All the logic for the TurnAround move lives in the Animator state - so we just wait for it to finish
-        public override void Begin(BossSensors sensors, BossStats stats, HurtboxManager _)
+        public override void Begin(BossSensors sensors, BossStats stats, HitboxManager _)
         {
             m_IsWaitingForAnimator = false;
             m_IsFinished = false;

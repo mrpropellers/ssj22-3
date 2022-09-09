@@ -9,7 +9,7 @@ namespace BossFight.BossCharacter
         public abstract bool IsFinished { get; }
         public virtual void DoUpdate() { }
 
-        public virtual void Begin(BossSensors sensors, BossStats stats, HurtboxManager hurtboxes) {}
+        public virtual void Begin(BossSensors sensors, BossStats stats, HitboxManager hitboxes) {}
 
         public abstract bool CanStart(BossSensors sensors);
 

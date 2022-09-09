@@ -34,12 +34,12 @@ namespace BossFight
         float m_ProjectileSpeed;
 
         [SerializeField]
-        [Range(2f, 20f)]
+        [Range(1f, 20f)]
         float m_ProjectileLifespan = 5f;
 
         [SerializeField]
-        [Range(0f, 0.5f)]
-        float m_Cooldown;
+        [Range(0f, 1f)]
+        float m_Cooldown = 0.25f;
 
         Vector2 Forward => m_ForwardProvider.Forward;
 
