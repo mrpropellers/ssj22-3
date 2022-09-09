@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using LeftOut.JamAids;
 using TarodevController;
@@ -14,6 +15,7 @@ namespace BossFight
         int m_LastAttackPressedFrame = int.MinValue;
         ForwardProviderSideView m_ForwardProvider;
         float m_TimeUntilNextFootstep;
+        bool m_InHitstun;
 
         // NOTE: If this is smaller than attack cooldown could end up in an awkward
         //      situation where we get two attacks off one buffered button press
@@ -26,6 +28,10 @@ namespace BossFight
         float m_FootstepPeriod = 0.5f;
 
         [SerializeField]
+        [Range(0f, 2f)]
+        float m_OnHitControlLoss = 1f;
+
+        [SerializeField]
         BoolVariableInstancer m_CanProcessInput;
 
         [SerializeField]
@@ -36,6 +42,8 @@ namespace BossFight
 
         [field: SerializeField]
         public VoidEvent OnFootstep { get; private set; }
+        [field: SerializeField]
+        public VoidEvent OnPlayerHit { get; private set; }
 
         bool AttackIsInBuffer =>
             Time.time - m_LastAttackPressedTime < m_AttackBufferTime
@@ -55,6 +63,7 @@ namespace BossFight
             m_ForwardProvider = GetComponent<ForwardProviderSideView>();
             Jumped += OnJumped.Raise;
             m_TimeUntilNextFootstep = m_FootstepPeriod;
+            OnPlayerHit.Register(HandleHit);
         }
 
         void OnDestroy()
@@ -82,6 +91,12 @@ namespace BossFight
 
         }
 
+        void HandleHit()
+        {
+            _rb.velocity = (-m_ForwardProvider.Forward + Vector2.up * 0.5f) * _stats.MaxSpeed;
+            StartCoroutine(OnHitControlLoss());
+        }
+
         protected override void HandleAttacking()
         {
             if (!_attackToConsume && !AttackIsInBuffer) return;
@@ -89,13 +104,17 @@ namespace BossFight
             {
                 Debug.Log("Attacking.");
                 m_Weapon.Fire();
-                var forward = m_ForwardProvider.Forward;
-                transform.DOBlendableLocalMoveBy(-forward * m_Weapon.Kickback, 0.05f)
-                    .SetEase(Ease.OutCirc)
-                    .SetRelative();
-                transform.DOBlendablePunchRotation(forward.x * Vector3.forward * 10f, 0.075f)
-                    .SetEase(Ease.OutCirc)
-                    .SetRelative();
+                // Give weapon kickback if on ground - if in air this messes with controls too much
+                if (_grounded)
+                {
+                    var forward = m_ForwardProvider.Forward;
+                    transform.DOBlendableLocalMoveBy(-forward * m_Weapon.Kickback, 0.05f)
+                        .SetEase(Ease.OutCirc)
+                        .SetRelative();
+                    transform.DOBlendablePunchRotation(forward.x * Vector3.forward * 10f, 0.075f)
+                        .SetEase(Ease.OutCirc)
+                        .SetRelative();
+                }
                 //_rb.AddForce(-forward * m_Weapon.Kickback, ForceMode2D.Impulse);
                 //_rb.AddTorque(-forward.x * m_Weapon.Kickback, ForceMode2D.Impulse);
             }
@@ -120,12 +139,33 @@ namespace BossFight
 
         protected override void FixedUpdate()
         {
+            if (m_InHitstun) return;
             if (!m_CanProcessInput.Value)
             {
                 // Clear any frameInput data that was gathered if the player doesn't have control
                 _frameInput = new FrameInput();
             }
             base.FixedUpdate();
+        }
+
+        IEnumerator OnHitControlLoss()
+        {
+            m_CanProcessInput.Value = false;
+            m_InHitstun = true;
+            var timeElapsed = 0f;
+            while (timeElapsed < m_OnHitControlLoss)
+            {
+                yield return null;
+                timeElapsed += Time.deltaTime;
+            }
+            m_InHitstun = false;
+            timeElapsed = 0f;
+            while (timeElapsed < m_OnHitControlLoss)
+            {
+                yield return null;
+                timeElapsed += Time.deltaTime;
+            }
+            m_CanProcessInput.Value = true;
         }
 
         bool HasHitCeiling(RaycastHit2D[] hits)

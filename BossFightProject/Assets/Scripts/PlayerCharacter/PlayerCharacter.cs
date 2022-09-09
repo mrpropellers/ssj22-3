@@ -20,8 +20,8 @@ namespace BossFight
         FloatConstant PostRespawnFreezeTime;
         [SerializeField]
         FloatConstant PostRespawnInvulnerabilityTime;
-        // TODO: Replace with a different value
-        float PostDamageInvulnerabilityTime => PostRespawnInvulnerabilityTime.Value;
+        [SerializeField]
+        FloatConstant PostDamageInvulnerabilityTime;
         #endregion
 
 
@@ -37,6 +37,8 @@ namespace BossFight
 
         #region Global Events
 
+        [SerializeField]
+        VoidEvent PlayerHit;
         [SerializeField]
         GameObjectEventReference DeathStartedEvent;
         [SerializeField]
@@ -121,13 +123,14 @@ namespace BossFight
             if (damageToApply > 0)
             {
                 PlayerHealth.Value -= damageToApply;
+                PlayerHit.Raise();
                 if (PlayerHealth.Value <= 0)
                 {
                     Die();
                 }
                 else
                 {
-                    StartInvulnerabilityPeriod(PostDamageInvulnerabilityTime);
+                    StartInvulnerabilityPeriod(PostDamageInvulnerabilityTime.Value);
                 }
             }
 

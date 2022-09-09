@@ -2,7 +2,8 @@
     "name": "BossFight.Shared",
     "rootNamespace": "",
     "references": [
-        "GUID:bb11691ec533ebc449d8c527e75f5b9a"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:517d68e952e134045810d1ed7411423b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

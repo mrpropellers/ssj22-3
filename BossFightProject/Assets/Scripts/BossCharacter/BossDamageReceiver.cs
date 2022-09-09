@@ -16,6 +16,10 @@ namespace BossFight.BossCharacter.BossCharacter
         [SerializeField]
         IntReference m_CurrentHealth;
 
+        [SerializeField]
+        [Range(1, 100)]
+        int m_DamageClamp = 30;
+
         void Awake()
         {
             m_Damageable = GetComponent<DamagePasserOncePerFrame>();
@@ -29,7 +33,7 @@ namespace BossFight.BossCharacter.BossCharacter
 
         DamageResult HandleDamage(DamageAttempt attempt)
         {
-            var amount = (int)attempt.FinalDamageAmount;
+            var amount = Math.Clamp((int)attempt.FinalDamageAmount, 0, m_DamageClamp);
             m_CurrentHealth.Value -= amount;
             return new DamageResult(amount);
         }
