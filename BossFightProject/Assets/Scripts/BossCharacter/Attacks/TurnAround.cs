@@ -41,6 +41,7 @@ namespace BossFight.BossCharacter
         // All the logic for the TurnAround move lives in the Animator state - so we just wait for it to finish
         public override void Begin(BossSensors sensors, BossStats stats, HitboxManager _)
         {
+            sensors.transform.DOComplete();
             m_IsWaitingForAnimator = false;
             m_IsFinished = false;
             // We'll need to access the Animator for this maneuver, so store a reference now
@@ -50,18 +51,11 @@ namespace BossFight.BossCharacter
                 sensors.DistanceFromBackBounds(
                     sensors.FrontBoundsToPosition(arenaObservation.DistanceFromFrontWall)), int.MinValue, 0f));
 
-            if (Mathf.Approximately(0f, backUpDistance))
-            {
-                WaitForTurnAround();
-            }
-            else
-            {
-                //Debug.Log($"Backing up {backUpDistance}");
-                var targetX = sensors.transform.position.x - (sensors.Forward2D.x * backUpDistance);
-                sensors.transform.DOMoveX(targetX, m_ReverseTime).SetEase(Ease.Linear);
-                m_TimeReverseStarted = Time.time;
-                //Debug.Log($"Starting to backup at {m_TimeReverseStarted}");
-            }
+            Debug.Log($"Backing up {backUpDistance}");
+            var move = sensors.transform.position - (Vector3)(sensors.Forward2D * backUpDistance);
+            sensors.transform.DOBlendableMoveBy(-sensors.Forward2D * backUpDistance, m_ReverseTime)
+                .SetRelative().SetEase(Ease.Linear);
+            m_TimeReverseStarted = Time.time;
         }
 
         public override void DoUpdate()

@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 708376110c05a4e20b0ce756930c3bb0, type: 3}
-  m_Name: BossBellyMultiplier
+  m_Script: {fileID: 11500000, guid: 62515a4d582fc0c4e9e9efea21f8a509, type: 3}
+  m_Name: ThrowAttack
   m_EditorClassIdentifier: 
-  _developerDescription: 
-  _id: 
-  _value: 2
+  m_VerticalAimCompensation: 3.58
+  RockBreakEvent: {fileID: 11400000, guid: 98087b5278394a64b9e5cd374d82c42d, type: 2}
+  WindupDuration: 2.5
+  m_CooldownTime: 1

@@ -10,7 +10,7 @@ using UnityEngine;
 namespace BossFight
 {
     [RequireComponent(typeof(DamagePasserOncePerFrame))]
-    [RequireComponent(typeof(ForwardProviderSideView))]
+    [RequireComponent(typeof(SpriteForwardProvider))]
     public class PlayerCharacter : MonoBehaviour, ITrackableInstance
     {
         #region Player Stats

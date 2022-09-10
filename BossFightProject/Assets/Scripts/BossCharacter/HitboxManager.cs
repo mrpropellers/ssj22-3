@@ -41,6 +41,8 @@ namespace BossFight
         [SerializeField]
         List<MeshRenderer> m_Indicators;
 
+        public ProjectileWeapon Weapon { get; private set; }
+
         float TimeElapsedFullyActive => Time.time - (m_TimeWindupStarted + m_WindupDuration);
 
         void Awake()
@@ -52,6 +54,8 @@ namespace BossFight
                 m_OriginalBaseColor = m_Indicators[0].material.GetColor(ShaderProperty.MainColorId);
                 m_OriginalEmissiveColor = m_Indicators[0].material.GetColor(ShaderProperty.EmissiveColorId);
             }
+
+            Weapon = GetComponentInChildren<ProjectileWeapon>();
         }
 
         void Update()

@@ -55,14 +55,15 @@ namespace BossFight.BossCharacter
             var totalChargingDistance = sensors.CurrentArenaObservation.DistanceFromFrontWall;
             var movementStats = stats.GroundMovementStats;
             var chargeTime = totalChargingDistance / (m_Speed * movementStats.SpeedScalar);
-            var targetX = sensors.transform.position.x + (sensors.Forward2D * totalChargingDistance).x;
+            var target = sensors.Forward2D * totalChargingDistance;
             var windup = m_WindupTime / movementStats.SpeedScalar;
-            sensors.transform.DOMoveX(targetX, chargeTime).SetEase(Ease.InOutCubic)
+            sensors.transform.DOBlendableMoveBy(target, chargeTime)
+                .SetEase(Ease.InOutCubic)
                 .SetDelay(windup);
             m_TotalAttackTime = windup + chargeTime;
             m_StartTime = Time.time;
             hitboxes.ActivateAfter(windup);
-            Debug.Log($"Charging for {m_TotalAttackTime} to get to {targetX}");
+            //Debug.Log($"Charging for {m_TotalAttackTime} to get to {targetX}");
         }
     }
 }
