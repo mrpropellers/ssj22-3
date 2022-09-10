@@ -1,5 +1,6 @@
 ﻿using System;
 using BossFight.Constants;
+using DG.Tweening;
 using LeftOut.Extensions;
 using UnityEngine;
 
@@ -75,6 +76,7 @@ namespace BossFight.BossCharacter
             m_Animator.SetTrigger(AnimatorParameters.TriggerMoveFinished);
             m_CurrentMove = null;
             m_RemainingDecisionCooldown = m_BossStats.DecisionCooldown;
+            transform.DOComplete();
             hitboxes?.DeactivateAll();
         }
 

@@ -13,7 +13,7 @@ namespace BossFight
     {
         float m_LastAttackPressedTime = float.NegativeInfinity;
         int m_LastAttackPressedFrame = int.MinValue;
-        ForwardProviderSideView m_ForwardProvider;
+        SpriteForwardProvider m_SpriteForwardProvider;
         float m_TimeUntilNextFootstep;
         bool m_InHitstun;
 
@@ -35,7 +35,7 @@ namespace BossFight
         BoolVariableInstancer m_CanProcessInput;
 
         [SerializeField]
-        SaltShakerWeapon m_Weapon;
+        ProjectileWeapon m_Weapon;
 
         [field: SerializeField]
         public VoidEvent OnJumped { get; private set; }
@@ -60,7 +60,7 @@ namespace BossFight
             // Ensure no leftover data from previous editor runs
             m_LastAttackPressedFrame = Time.frameCount - 10;
             m_LastAttackPressedTime = Time.time - m_AttackBufferTime * 2f;
-            m_ForwardProvider = GetComponent<ForwardProviderSideView>();
+            m_SpriteForwardProvider = GetComponent<SpriteForwardProvider>();
             Jumped += OnJumped.Raise;
             m_TimeUntilNextFootstep = m_FootstepPeriod;
             OnPlayerHit.Register(HandleHit);
@@ -93,7 +93,7 @@ namespace BossFight
 
         void HandleHit()
         {
-            _rb.velocity = (-m_ForwardProvider.Forward + Vector2.up * 0.5f) * _stats.MaxSpeed;
+            _rb.velocity = (-m_SpriteForwardProvider.Forward2D + Vector2.up * 0.5f) * _stats.MaxSpeed;
             StartCoroutine(OnHitControlLoss());
         }
 
@@ -102,12 +102,12 @@ namespace BossFight
             if (!_attackToConsume && !AttackIsInBuffer) return;
             if (m_Weapon.CanFire)
             {
-                Debug.Log("Attacking.");
+                //Debug.Log("Attacking.");
                 m_Weapon.Fire();
                 // Give weapon kickback if on ground - if in air this messes with controls too much
                 if (_grounded)
                 {
-                    var forward = m_ForwardProvider.Forward;
+                    var forward = m_SpriteForwardProvider.Forward;
                     transform.DOBlendableLocalMoveBy(-forward * m_Weapon.Kickback, 0.05f)
                         .SetEase(Ease.OutCirc)
                         .SetRelative();

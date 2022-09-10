@@ -4889,7 +4889,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Owner>k__BackingField: {fileID: 0}
-  DamageAmount: 1
+  <DamageAmount>k__BackingField: 1
+  <IsOn>k__BackingField: 0
 --- !u!114 &1179228029438950542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4902,6 +4903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6916238f4c4ba1b1a30a1178ac6fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_IsDebugMode: {fileID: 11400000, guid: a200a0ded8f63f344849964fcb0ecafe, type: 2}
   m_DamageCurve:
     serializedVersion: 2
     m_Curve: []
@@ -4914,9 +4916,12 @@ MonoBehaviour:
   m_NumSpins: 3
   m_WallUpForce: 10
   m_SpinPeriodSeconds: 0.79
-  <OnBounce>k__BackingField: {fileID: 0}
-  <OnBreak>k__BackingField: {fileID: 0}
-  <OnDamageChannel>k__BackingField: {fileID: 0}
+  <OnBounce>k__BackingField: {fileID: 11400000, guid: c741d805b244c8747996c39aaaeaefd0,
+    type: 2}
+  <OnBreak>k__BackingField: {fileID: 11400000, guid: 480f60f868745c04ea10b14b3fecf4ae,
+    type: 2}
+  <OnDamageChannel>k__BackingField: {fileID: 11400000, guid: fa59ddaaaf9dd2a4fa9f29deb5e49156,
+    type: 2}
 --- !u!70 &837171109
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

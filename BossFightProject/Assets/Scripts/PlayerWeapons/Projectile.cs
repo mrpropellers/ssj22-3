@@ -13,32 +13,36 @@ namespace BossFight
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Hitbox))]
     //[RequireComponent(typeof(SpriteRenderer))]
-    public class SaltShakerProjectile : MonoBehaviour
+    public class Projectile : MonoBehaviour
     {
         [SerializeField]
         BoolVariable m_IsDebugMode;
 
         const int k_DoubleBounceBuffer = 10;
-        const int k_CritThreshold = 15;
+        const int k_CritThreshold = 9;
 
         Rigidbody2D m_Rigidbody;
         ParticleSystem m_Particles;
         Hitbox m_Hitbox;
-        SpriteRenderer m_Renderer;
         TextMeshPro m_TextMesh;
         bool m_IsCleaningUp;
         int m_NumBounces;
-        int m_HurtboxReactivateFrame;
-        int m_MaxHit = int.MinValue;
+        int m_HitboxReactivateFrame;
         Vector2 m_LastTravelDirectionEven;
         Vector2 m_LastTravelDirectionOdd;
 
         float m_InitialLifespan;
         internal float Lifespan;
-        internal ObjectPool<SaltShakerProjectile> Pool;
+        internal ObjectPool<Projectile> Pool;
+
+        [SerializeField]
+        Renderer m_Renderer;
 
         [SerializeField]
         AnimationCurve m_DamageCurve;
+
+        [SerializeField]
+        bool m_CanBounce = true;
 
         [SerializeField]
         [Range(0f, 10f)]
@@ -85,7 +89,6 @@ namespace BossFight
         void Awake()
         {
             m_Rigidbody = GetComponent<Rigidbody2D>();
-            m_Renderer = GetComponentInChildren<SpriteRenderer>();
             m_Particles = GetComponentInChildren<ParticleSystem>();
             m_Hitbox = GetComponent<Hitbox>();
             m_Hitbox.OnDamageProcessed += HandleDamageResult;
@@ -101,8 +104,8 @@ namespace BossFight
             m_IsCleaningUp = false;
             m_InitialLifespan = Lifespan;
             m_NumBounces = 0;
-            m_Particles.Play();
-            m_Hitbox.Activate();
+            m_Particles.Play(true);
+            m_HitboxReactivateFrame = Time.frameCount + 1;
             m_Hitbox.DamageMultiplier = m_DamageCurve.Evaluate(0);
             m_Renderer.enabled = true;
             //m_Renderer.gameObject.SetActive(true);
@@ -135,10 +138,10 @@ namespace BossFight
                     m_TextMesh.color = Color.white;
                     break;
                 case false when m_IsCleaningUp:
-                    m_Particles.Stop();
+                    m_Particles.Stop(true);
                     break;
                 case false when !m_IsCleaningUp:
-                    m_Particles.Play();
+                    m_Particles.Play(true);
                     break;
             }
 
@@ -153,7 +156,7 @@ namespace BossFight
                 m_LastTravelDirectionEven = m_Rigidbody.velocity.normalized;
             else
                 m_LastTravelDirectionOdd = m_Rigidbody.velocity.normalized;
-            if (Time.frameCount >= m_HurtboxReactivateFrame && !m_Hitbox.IsOn)
+            if (Time.frameCount >= m_HitboxReactivateFrame && !m_Hitbox.IsOn)
             {
                 m_Hitbox.Activate();
             }
@@ -169,19 +172,24 @@ namespace BossFight
             }
         }
 
+        public void DelayActivation(int frames)
+        {
+            m_Hitbox.Deactivate();
+            m_HitboxReactivateFrame = Time.frameCount + frames;
+        }
+
         void HandleDamageResult(object _, DamageResult result)
         {
             if (m_IsCleaningUp) return;
             Debug.Assert(result.AttemptWasProcessed,
                 "This event should only be invoked if the damage receiver did not ignore the damage attempt");
-            Lifespan -= m_LifespanReductionOnBounce * (float)(result.AmountApplied);
+            Lifespan -= m_LifespanReductionOnBounce * ((float)result.AmountApplied + 0.2f);
             m_Hitbox.Deactivate();
-            m_HurtboxReactivateFrame = Time.frameCount + k_DoubleBounceBuffer;
+            m_HitboxReactivateFrame = Time.frameCount + k_DoubleBounceBuffer;
             m_NumBounces++;
-            m_MaxHit = Math.Max(m_MaxHit, result.AmountApplied);
             if (result.AmountApplied > 0)
             {
-                var isBounce = Lifespan > 0f;
+                var isBounce = Lifespan > 0f && m_CanBounce;
                 Debug.Assert(result.AmountApplied < k_CritThreshold || !isBounce,
                     "Bounces should never go above crit threshold");
                 var isCrit = !isBounce && result.AmountApplied > k_CritThreshold;
@@ -191,11 +199,12 @@ namespace BossFight
                 var direction = Time.frameCount % 2 == 0
                     ? m_LastTravelDirectionOdd :
                     m_LastTravelDirectionEven;
-                OnDamageChannel.OnDamage?.Invoke(new BossDamageEventChannel.DamageInfo(
+                // Should be able to simply leave this blank if the projectile will not hit the boss
+                OnDamageChannel?.OnDamage?.Invoke(new BossDamageEventChannel.DamageInfo(
                     transform.position, result.AmountApplied, direction, intensity, isCrit));
 
             }
-            if (Lifespan <= 0f)
+            if (Lifespan <= 0f || !m_CanBounce)
             {
                 StartCleanUp();
             }
@@ -203,11 +212,11 @@ namespace BossFight
             else if (result.AmountApplied == 0)
             {
                 m_Rigidbody.AddForce(Vector2.down * m_WallUpForce);
-                OnBounce.Raise();
+                OnBounce?.Raise();
             }
             else
             {
-                OnBounce.Raise();
+                OnBounce?.Raise();
             }
         }
 
@@ -215,9 +224,12 @@ namespace BossFight
         {
             OnBreak.Raise();
             m_Hitbox.Deactivate();
-            m_Particles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+            m_Particles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            if (m_CanBounce)
+            {
+                m_Renderer.enabled = false;
+            }
             m_IsCleaningUp = true;
-            m_Renderer.enabled = false;
             if (m_IsDebugMode.Value)
             {
                 m_TextMesh.color = Color.grey;
@@ -235,6 +247,10 @@ namespace BossFight
 
         void CleanUp()
         {
+            if (!m_CanBounce)
+            {
+                m_Renderer.enabled = false;
+            }
             if (Pool != null)
             {
                 Pool.Release(this);
