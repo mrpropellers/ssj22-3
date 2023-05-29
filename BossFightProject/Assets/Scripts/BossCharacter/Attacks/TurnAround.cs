@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityAtoms;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
+using LeftOut.UnityMath;
 
 namespace BossFight.BossCharacter
 {
@@ -14,6 +15,10 @@ namespace BossFight.BossCharacter
         bool m_IsFinished;
         float m_TimeReverseStarted = float.NegativeInfinity;
         Animator m_Animator;
+        Transform m_TargetTransform;
+        float m_StartYaw;
+        float m_FinalYaw;
+        bool m_AnimatorHasFinished;
 
         [SerializeField]
         GameObjectEvent m_AnimatorFinishedEvent;
@@ -41,8 +46,9 @@ namespace BossFight.BossCharacter
         // All the logic for the TurnAround move lives in the Animator state - so we just wait for it to finish
         public override void Begin(BossSensors sensors, BossStats stats, HitboxManager _)
         {
-            sensors.transform.DOComplete();
+            m_TargetTransform = sensors.transform;
             m_IsWaitingForAnimator = false;
+            m_AnimatorHasFinished = false;
             m_IsFinished = false;
             // We'll need to access the Animator for this maneuver, so store a reference now
             m_Animator = sensors.GetComponent<Animator>();
@@ -52,8 +58,8 @@ namespace BossFight.BossCharacter
                     sensors.FrontBoundsToPosition(arenaObservation.DistanceFromFrontWall)), int.MinValue, 0f));
 
             Debug.Log($"Backing up {backUpDistance}");
-            var move = sensors.transform.position - (Vector3)(sensors.Forward2D * backUpDistance);
-            sensors.transform.DOBlendableMoveBy(-sensors.Forward2D * backUpDistance, m_ReverseTime)
+            //var move = sensors.transform.position - (Vector3)(sensors.Forward2D * backUpDistance);
+            m_TargetTransform.DOBlendableMoveBy(-sensors.Forward2D * backUpDistance, m_ReverseTime)
                 .SetRelative().SetEase(Ease.Linear);
             m_TimeReverseStarted = Time.time;
         }
@@ -65,11 +71,25 @@ namespace BossFight.BossCharacter
             {
                 return;
             }
+            if (m_AnimatorHasFinished)
+            {
+                // Sanity-check that the animation completed with the appropriate yaw
+                if (!Mathf.Approximately(m_TargetTransform.rotation.eulerAngles.y, m_FinalYaw))
+                {
+                    var rotations = m_TargetTransform.rotation.eulerAngles;
+                    Debug.LogWarning($"Overriding current yaw of {rotations.y} with {m_FinalYaw}");
+                    rotations.y = m_FinalYaw;
+                    m_TargetTransform.rotation = Quaternion.Euler(rotations);
+                }
+                m_IsFinished = true;
+                return;
+            }
 
             if (!IsBackingUp)
             {
                 //Debug.Log($"No longer backing up at {Time.time}");
                 WaitForTurnAround();
+
             }
         }
 
@@ -77,13 +97,18 @@ namespace BossFight.BossCharacter
         {
             //Debug.Log("Turn around finished");
             Debug.Assert(m_IsWaitingForAnimator);
-            m_AnimatorFinishedEvent.UnregisterListener(this);
+            m_AnimatorHasFinished = true;
             m_IsWaitingForAnimator = false;
-            m_IsFinished = true;
+            m_AnimatorFinishedEvent.UnregisterListener(this);
         }
 
         void WaitForTurnAround()
         {
+            m_FinalYaw = m_TargetTransform.rotation.eulerAngles.y + 180f;
+            if (m_FinalYaw >= 360f)
+            {
+                m_FinalYaw -= 360;
+            }
             m_IsWaitingForAnimator = true;
             m_AnimatorFinishedEvent.RegisterListener(this);
             // This should trigger the TurnAround state which is handled in the Animator's state machine

@@ -57,6 +57,11 @@ namespace BossFight.BossCharacter
             var chargeTime = totalChargingDistance / (m_Speed * movementStats.SpeedScalar);
             var target = sensors.Forward2D * totalChargingDistance;
             var windup = m_WindupTime / movementStats.SpeedScalar;
+            var numTweeensActive = sensors.transform.DOComplete();
+            if (numTweeensActive > 0)
+            {
+                Debug.LogWarning($"Killed {numTweeensActive} tweens when starting Charge Attack...");
+            }
             sensors.transform.DOBlendableMoveBy(target, chargeTime)
                 .SetEase(Ease.InOutCubic)
                 .SetDelay(windup);

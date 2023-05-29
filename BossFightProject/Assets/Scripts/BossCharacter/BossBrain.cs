@@ -14,6 +14,7 @@ namespace BossFight.BossCharacter
         UnityEngine.Animator m_Animator;
         HitboxManager m_Hitboxes;
         BossMove m_CurrentMove;
+        TeleportBlocker m_TeleportBlocker;
 
         float m_RemainingDecisionCooldown;
 
@@ -29,6 +30,8 @@ namespace BossFight.BossCharacter
             m_Sensors = GetComponent<BossSensors>();
             m_Animator = GetComponent<UnityEngine.Animator>();
             m_Hitboxes = GetComponent<HitboxManager>();
+            // We'll need to poll this before picking a new move to keep from getting in a bad state
+            m_TeleportBlocker = GetComponent<TeleportBlocker>();
             if (m_Hitboxes == null)
             {
                 Debug.LogWarning($"No {nameof(HitboxManager)} attached - may not activate hurtboxes correctly.");
@@ -41,15 +44,15 @@ namespace BossFight.BossCharacter
         {
             if (m_CurrentMove != null)
             {
-                m_CurrentMove.DoUpdate();
                 if (m_CurrentMove.IsFinished)
                 {
                     CleanUpFinishedMove();
                 }
                 else
                 {
-                    return;
+                    m_CurrentMove.DoUpdate();
                 }
+                return;
             }
 
             m_RemainingDecisionCooldown -= Time.deltaTime;
@@ -58,6 +61,11 @@ namespace BossFight.BossCharacter
                 return;
             }
 
+            if (m_TeleportBlocker.WasTeleportDetected)
+            {
+                Debug.LogWarning("Unable to pick a move this frame because we Teleported...");
+                return;
+            }
             Debug.Log("Attempting to pick attack...");
             PickNewMove();
         }
@@ -76,7 +84,11 @@ namespace BossFight.BossCharacter
             m_Animator.SetTrigger(AnimatorParameters.TriggerMoveFinished);
             m_CurrentMove = null;
             m_RemainingDecisionCooldown = m_BossStats.DecisionCooldown;
-            transform.DOComplete();
+            var numTweensKilled = transform.DOKill();
+            if (numTweensKilled > 0)
+            {
+                Debug.LogError($"{numTweensKilled} Tweens were still going at end of move...");
+            }
             hitboxes?.DeactivateAll();
         }
 
